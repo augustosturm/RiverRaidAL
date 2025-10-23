@@ -1,0 +1,1 @@
+void moveEnemy(Enemy *e);
