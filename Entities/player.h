@@ -1,7 +1,17 @@
-/**
- * @brief Checks for collision between player and enemy.
- *
- * @param Rectangle player The player's position and hitbox.
- * @param Rectangle enemy The enemy's position and hitbox.
- */
-void checkCollision(Rectangle player, Rectangle enemy);
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <stdbool.h>
+#include "raylib.h"
+
+typedef struct {
+    Rectangle entity;
+    float speed;
+    int missileFired;
+} Player;
+
+Player createPlayer(Vector2 pos, Vector2 hitBoxArea, float speed);
+
+bool checkCollisionEnemy(Rectangle playerEntity, Rectangle enemyEntity);
+
+#endif

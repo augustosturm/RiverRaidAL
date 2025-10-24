@@ -1,9 +1,25 @@
+#ifndef ENEMY_H
+#define ENEMY_H
+
+#include "raylib.h"
+
 typedef struct {
     Rectangle entity;
     float speed;
     int direction;
-    float minX, maxX;
+    int minX;
+    int maxX;
+    int dead;
 } Enemy;
+
+/**
+ * @brief Creates an enemy with speed and range of movement.
+ *
+ * @param pos Initial position.
+ * @param hitBoxArea Hitbox size.
+ * @return Entity representing a Rectangle.
+ */
+Enemy createEnemy(Vector2 pos, Vector2 hitBoxArea, float speed, int minX, int maxX);
 
 /**
  * @brief Moves the enemy along the X axis.
@@ -20,3 +36,5 @@ void moveEnemy(Enemy *e);
  * @return void
  */
 void changeEnemyDirection(Enemy *e);
+
+#endif
