@@ -13,7 +13,7 @@ typedef struct {
 } Enemy;
 
 /**
- * @brief Creates an enemy with speed and range of movement.
+ * @brief Creates an enemy with speed, direction and range of movement.
  *
  * @param pos Initial position.
  * @param hitBoxArea Hitbox size.
