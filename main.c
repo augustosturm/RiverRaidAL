@@ -1,61 +1,61 @@
 #include <stdbool.h>
 #include "raylib.h"
-#include "Entities/entity.h"
-#include "Entities/player.h"
-#include "Entities/enemy.h"
-#include "Menu/mainMenu.h"
+#include "Entidades/entidade.h"
+#include "Entidades/jogador.h"
+#include "Entidades/inimigo.h"
+#include "Menu/menuPrincipal.h"
 
 
 int main(void) {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int larguraTela = 800;
+    const int alturaTela = 450;
     
-    int esc = 1;
-    int keyPressed;
-    enum ScreenSet screen = Title;
+    int opcao = 1;
+    int teclaPressionada;
+    enum ConjuntoTela tela = Titulo;
 
     //-------------------------------------------------------------------------
-    const Vector2 playerSize = {20.0f, 20.0f};
-    const Vector2 playerPosStart = {screenWidth / 2.0f - playerSize.x / 2.0f, screenHeight - playerSize.y * 2.0f};
-    const float playerSpeed = 200.0f;
-    Player player = createPlayer(playerPosStart, playerSize, playerSpeed);
+    const Vector2 tamanhoJogador = {20.0f, 20.0f};
+    const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
+    const float velocidadeJogador = 200.0f;
+    Jogador jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador);
     //-------------------------------------------------------------------------
-    const Vector2 missileSize = {5.0f, 5.0f};
-    const float missileSpeed = 400.0f;
-    Missile missile;
+    const Vector2 tamanhoMissil = {5.0f, 5.0f};
+    const float velocidadeMissil = 400.0f;
+    Missil missil;
 
-    const Vector2 enemySize = {20.0f, 20.0f};
-    Enemy enemies[2];
-    enemies[0] = createEnemy((Vector2){400.0f, 100.0f}, enemySize, 100.0f, 350, 500);
-    enemies[1] = createEnemy((Vector2){200.0f, 200.0f}, enemySize, 150.0f, 150, 350);
+    const Vector2 tamanhoInimigo = {20.0f, 20.0f};
+    Inimigo inimigos[2];
+    inimigos[0] = criaInimigo((Vector2){400.0f, 100.0f}, tamanhoInimigo, 100.0f, 350, 500);
+    inimigos[1] = criaInimigo((Vector2){200.0f, 200.0f}, tamanhoInimigo, 150.0f, 150, 350);
 
-    InitWindow(screenWidth, screenHeight, "Teste");
+    InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        if (screen != Game) {
-            keyPressed = GetKeyPressed();
+        if (tela != Jogo) {
+            teclaPressionada = GetKeyPressed();
         }
    
-        if (screen == Title) {
-            drawTitleScreen();
+        if (tela == Titulo) {
+            desenhaTelaTitulo();
             
-            if (keyPressed == KEY_ENTER) {
-                screen = MainMenu;
+            if (teclaPressionada == KEY_ENTER) {
+                tela = MenuPrincipal;
             }
-        } else if (screen == MainMenu) {
-            if (keyPressed == KEY_DOWN && esc < 4) {
-                esc++;
+        } else if (tela == MenuPrincipal) {
+            if (teclaPressionada == KEY_DOWN && opcao < 4) {
+                opcao++;
             }
-            if (keyPressed == KEY_UP && esc > 1) {
-                esc--;
-            }
-
-            if (keyPressed == KEY_ENTER && esc == 1) {
-                screen = Game;
+            if (teclaPressionada == KEY_UP && opcao > 1) {
+                opcao--;
             }
 
-            if (keyPressed == KEY_ENTER && esc == 4) {
+            if (teclaPressionada == KEY_ENTER && opcao == 1) {
+                tela = Jogo;
+            }
+
+            if (teclaPressionada == KEY_ENTER && opcao == 4) {
                 CloseWindow();
                 return 0;
             }
@@ -67,7 +67,7 @@ int main(void) {
             DrawText("Ranking", 100, 250, 50, YELLOW);
             DrawText("Sair", 100, 300, 50, YELLOW);
 
-            switch (esc)
+            switch (opcao)
             {
                 case 1:
                     DrawRectangle(50, 170, 10, 10, YELLOW);
@@ -87,40 +87,40 @@ int main(void) {
 
 
             EndDrawing();
-        } else if (screen == Game) {
-            const float ft = GetFrameTime();
+        } else if (tela == Jogo) {
+            const float tempoFrame = GetFrameTime();
 
             if (IsKeyDown(KEY_SPACE)) {
-                fireMissile(&player, &missile, missileSize, missileSpeed);
+                disparaMissil(&jogador, &missil, tamanhoMissil, velocidadeMissil);
             }
 
-            updateMissilePos(&player, &missile, ft);
+            atualizaPosicaoMissil(&jogador, &missil, tempoFrame);
 
-            if (IsKeyDown(KEY_RIGHT)) player.entity.x += player.speed * ft;
-            if (IsKeyDown(KEY_LEFT)) player.entity.x -= player.speed * ft;
-            if (IsKeyDown(KEY_UP)) player.entity.y -= player.speed * ft;
-            if (IsKeyDown(KEY_DOWN)) player.entity.y += player.speed * ft;
+            if (IsKeyDown(KEY_RIGHT)) jogador.entidade.x += jogador.velocidade * tempoFrame;
+            if (IsKeyDown(KEY_LEFT)) jogador.entidade.x -= jogador.velocidade * tempoFrame;
+            if (IsKeyDown(KEY_UP)) jogador.entidade.y -= jogador.velocidade * tempoFrame;
+            if (IsKeyDown(KEY_DOWN)) jogador.entidade.y += jogador.velocidade * tempoFrame;
 
-            if (player.entity.x < 0) player.entity.x = 0;
-            if (player.entity.y < 0) player.entity.y = 0;
-            if (player.entity.x + player.entity.width > screenWidth) player.entity.x = screenWidth - player.entity.width;
-            if (player.entity.y + player.entity.height > screenHeight) player.entity.y = screenHeight - player.entity.height;
+            if (jogador.entidade.x < 0) jogador.entidade.x = 0;
+            if (jogador.entidade.y < 0) jogador.entidade.y = 0;
+            if (jogador.entidade.x + jogador.entidade.width > larguraTela) jogador.entidade.x = larguraTela - jogador.entidade.width;
+            if (jogador.entidade.y + jogador.entidade.height > alturaTela) jogador.entidade.y = alturaTela - jogador.entidade.height;
 
             for (int i = 0; i < 2; i++) {
                 //MODIFICAR
-                Enemy *enemy = &enemies[i];
-                if (enemy->dead) {
+                Inimigo *inimigo = &inimigos[i];
+                if (inimigo->morto) {
                     continue;
                 }
                 //---------
-                moveEnemy(enemy);
+                moveInimigo(inimigo);
 
-                if (CheckCollisionRecs(missile.entity, enemy->entity)) {
-                    enemy->dead = 1;
-                    player.missileFired = false;
+                if (CheckCollisionRecs(missil.entidade, inimigo->entidade)) {
+                    inimigo->morto = 1;
+                    jogador.missilDisparado = false;
                 }
 
-                if (checkCollisionEnemy(player.entity, enemy->entity)) {
+                if (verificaColisaoInimigo(jogador.entidade, inimigo->entidade)) {
                     CloseWindow();
                     return 0;
                 }
@@ -129,15 +129,15 @@ int main(void) {
             BeginDrawing();
             ClearBackground(RAYWHITE);
 
-            DrawRectangleRec(player.entity, RED);
+            DrawRectangleRec(jogador.entidade, RED);
 
-            if (player.missileFired) {
-                DrawRectangleRec(missile.entity, GREEN);
+            if (jogador.missilDisparado) {
+                DrawRectangleRec(missil.entidade, GREEN);
             }
 
             for (int i = 0; i < 2; i++) {
-                if (!enemies[i].dead) {
-                    DrawRectangleRec(enemies[i].entity, BLUE);
+                if (!inimigos[i].morto) {
+                    DrawRectangleRec(inimigos[i].entidade, BLUE);
                 }
             }
 
