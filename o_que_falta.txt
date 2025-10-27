@@ -1,0 +1,11 @@
+Ajustar:
+Inimigos spawn
+Inimigos direção
+Movimentação do personagem pra frente
+
+--------------
+Fazer do zero:
+Sistema de Fases (Mapas, final do jogo ...)
+Save
+Sistema de pontuação
+Gasolina

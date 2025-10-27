@@ -3,7 +3,7 @@ CFLAGS := -I. -IEntities -IMenuScore -Wall -Wextra -std=c99
 LDFLAGS := -lraylib -lm -lpthread -ldl -lrt -lX11
 
 TARGET := main.out
-SRC := main.c $(wildcard Entities/*.c) $(wildcard MenuScore/*.c)
+SRC := main.c $(wildcard Entities/*.c) $(wildcard Menu/*.c) $(wildcard Menu/MenuScore/*.c)
 OBJ := $(SRC:.c=.o)
 
 .PHONY: all clean run
