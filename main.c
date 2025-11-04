@@ -5,6 +5,7 @@
 #include "Fase/Entidades/inimigo.h"
 #include "Fase/fase.h"
 #include "Menu/menuPrincipal.h"
+#include "Fase/Mapa/mapa.h"
 
 
 int main(void) {
@@ -48,6 +49,7 @@ int main(void) {
 
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
+            desenhaMapa();
             executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
         } else if (tela == Saida) {
             CloseWindow();
