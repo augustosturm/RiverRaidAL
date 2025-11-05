@@ -2,6 +2,8 @@
 #define INIMIGO_H
 
 #include "raylib.h"
+#include <stdbool.h>
+#define DIFPOS 200
 
 typedef struct {
     Rectangle entidade;
@@ -10,6 +12,7 @@ typedef struct {
     int minimoX;
     int maximoX;
     int morto;
+    int movendo;
 } Inimigo;
 
 /**
@@ -29,7 +32,15 @@ Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
  * @param inimigo Ponteiro do inimigo.
  * @return void
  */
-void moveInimigo(Inimigo *inimigo);
+void moveInimigo(Inimigo *inimigo, int jogadorPosicaoY);
+
+/**
+ * @brief Atualiza a posicao horizontal do inimigo quando ele esta em movimento.
+ *
+ * @param inimigo Ponteiro do inimigo.
+ * @return void
+ */
+void atualizaPosicaoInimigo(Inimigo *inimigo);
 
 /**
  * @brief Troca a direcao do inimigo quando atinge o limite do movimento.
@@ -38,5 +49,14 @@ void moveInimigo(Inimigo *inimigo);
  * @return void
  */
 void mudaDirecaoInimigo(Inimigo *inimigo);
+
+/**
+ * @brief Verifica se o jogador esta dentro da distancia de ativacao do inimigo.
+ *
+ * @param inimigo Ponteiro do inimigo.
+ * @param jogadorPosicaoY Posicao Y atual do jogador.
+ * @return true se o jogador esta proximo, false caso contrario.
+ */
+bool verificaJogadorProximo(Inimigo *inimigo, int jogadorPosicaoY);
 
 #endif

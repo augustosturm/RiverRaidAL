@@ -34,7 +34,7 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
             continue;
         }
         //-----------------------------
-        moveInimigo(inimigo);
+        moveInimigo(inimigo, jogador->entidade.y);
 
         if (CheckCollisionRecs(missil->entidade, inimigo->entidade)) {
             inimigo->morto = 1;
