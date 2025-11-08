@@ -7,6 +7,8 @@
 #include <string.h>
 #include "raylib.h"
 
-void desenhaMapa();
+void leMapa(char mapa[][24], int numArq);
+
+void desenhaMapa(char mapa[][24], int numArq);
 
 #endif

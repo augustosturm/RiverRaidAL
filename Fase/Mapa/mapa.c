@@ -4,13 +4,11 @@
 #include <string.h>
 #include "raylib.h"
 
-void desenhaMapa() {
+void leMapa(char mapa[][24], int numArq) {
     char nome[50];
-    int numArq = 2;  // número de mapas
-    char mapa[20 * numArq][24];  // 20 linhas por mapa, 24 colunas
 
     for (int i = 0; i < numArq; i++) {  
-        sprintf(nome, "Arquivos/map%d.txt", (numArq-i));
+        sprintf(nome, "Fase/Mapa/Arquivos/map%d.txt", (numArq-i));
 
         FILE *arquivo = fopen(nome, "r");
 
@@ -27,13 +25,29 @@ void desenhaMapa() {
         }
     }
 
-    BeginDrawing();
     for(int i = 0; i < (numArq*20); i++){
         for(int j = 0; j < 24; j++){
             printf(" %c", mapa[i][j]);
-            DrawRectangle(i*16, (j+1)*16, 16, 16, BLUE);
+            mapa[i][j] = mapa[i][j];
         }
         printf("\n");
     }
-    EndDrawing();
+}
+
+void desenhaMapa(char mapa[][24], int numArq){
+
+    //BeginDrawing();
+    ClearBackground(RAYWHITE);
+    for(int i = 0; i < (numArq*20); i++){
+        for(int j = 0; j < 24; j++){
+            
+            if(mapa[i][j] == 'T')
+                DrawRectangle(j*40, i*40, 40, 40, GREEN);
+            else if(mapa[i][j] == ' ')
+                DrawRectangle(j*40, i*40, 40, 40, SKYBLUE);
+            else if(mapa[i][j] == 'X')
+                DrawRectangle(j*40, i*40, 40, 40, SKYBLUE);
+        }
+    }
+    //EndDrawing();
 }

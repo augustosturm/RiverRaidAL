@@ -9,8 +9,10 @@
 
 
 int main(void) {
-    const int larguraTela = 800;
-    const int alturaTela = 450;
+    const int larguraTela = 960;
+    const int alturaTela = 800;
+    int numArq = 2;  // número de mapas
+    char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
     
     enum OpcaoMenuPrincipal opcao = 0;
     int teclaPressionada;
@@ -20,6 +22,8 @@ int main(void) {
     const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
     const float velocidadeJogador = 200.0f;
     Jogador jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador);
+
+    leMapa(mapa, numArq);
 
     // const Vector2 tamanhoMissil = {5.0f, 5.0f};
     // const float velocidadeMissil = 400.0f;
@@ -49,8 +53,10 @@ int main(void) {
 
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
-            desenhaMapa();
+            BeginDrawing();
+            desenhaMapa(mapa, numArq);
             executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
+            EndDrawing();
         } else if (tela == Saida) {
             CloseWindow();
             return 0;

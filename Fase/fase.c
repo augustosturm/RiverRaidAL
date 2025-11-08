@@ -3,6 +3,7 @@
 #include "fase.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
+#include "Mapa/mapa.h"
 
 void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int larguraTela, int alturaTela) {
     const float tempoFrame = GetFrameTime();
@@ -47,8 +48,7 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
         }
     }
 
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
+    //BeginDrawing();
 
     DrawRectangleRec(jogador->entidade, RED);
 
@@ -62,5 +62,5 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
         }
     }
 
-    EndDrawing();
+    //EndDrawing();
 }
