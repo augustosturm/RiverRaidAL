@@ -13,6 +13,12 @@ int main(void) {
     const int alturaTela = 800;
     int numArq = 2;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
+
+    Camera2D camera = {0};
+    camera.target = (Vector2){0.0f, 0.0f};   // Ponto do mundo que a câmera "olha"
+    camera.offset = (Vector2){0.0f, 0.0f}; // Centro da tela
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
     
     enum OpcaoMenuPrincipal opcao = 0;
     int teclaPressionada;
@@ -53,10 +59,17 @@ int main(void) {
 
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
+
+            camera.target.y = jogador.entidade.y - alturaTela + 40;
             BeginDrawing();
+            BeginMode2D(camera);
+
             desenhaMapa(mapa, numArq);
             executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
+            
+            EndMode2D();
             EndDrawing();
+
         } else if (tela == Saida) {
             CloseWindow();
             return 0;

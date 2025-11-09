@@ -36,18 +36,20 @@ void leMapa(char mapa[][24], int numArq) {
 
 void desenhaMapa(char mapa[][24], int numArq){
 
-    //BeginDrawing();
+    int yNormal = ((numArq-1)*-20);
+
     ClearBackground(RAYWHITE);
     for(int i = 0; i < (numArq*20); i++){
         for(int j = 0; j < 24; j++){
             
             if(mapa[i][j] == 'T')
-                DrawRectangle(j*40, i*40, 40, 40, GREEN);
+                DrawRectangle(j*40, yNormal*40, 40, 40, GREEN);
             else if(mapa[i][j] == ' ')
-                DrawRectangle(j*40, i*40, 40, 40, SKYBLUE);
+                DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
             else if(mapa[i][j] == 'X')
-                DrawRectangle(j*40, i*40, 40, 40, SKYBLUE);
+                DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
         }
+    yNormal++;
     }
     //EndDrawing();
 }
