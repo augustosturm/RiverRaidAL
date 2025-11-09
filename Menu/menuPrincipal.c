@@ -18,6 +18,7 @@ void desenhaTelaTitulo(void) {
     ClearBackground(BLUE);
     DrawText("RiverRaid AL Edicao +", 100, 100, 50, YELLOW);
     DrawText("Ver. Alpha", 100, 160, 30, YELLOW);
+    DrawText("Press ENTER to play", 100, 210, 25, YELLOW);
     EndDrawing();
 }
 

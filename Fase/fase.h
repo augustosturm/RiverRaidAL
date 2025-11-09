@@ -6,6 +6,6 @@
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
 
-void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int larguraTela, int alturaTela);
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura);
 
 #endif

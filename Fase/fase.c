@@ -4,19 +4,34 @@
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
 
-void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int larguraTela, int alturaTela) {
+static const Rectangle SPRITE_PARADO = {102, 70, 56, 51};
+static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
+static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
+
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura) {
     const float tempoFrame = GetFrameTime();
+    const float deslocamento = jogador->velocidade * tempoFrame;
+    enum HitBoxJogador hitBoxJogadorArea = Parado;
+    Rectangle spriteAtual = SPRITE_PARADO;
 
     if (IsKeyDown(KEY_SPACE)) {
-        disparaMissil(jogador, missil, (Vector2) {5.0f, 5.0f}, 400.0f);
+        disparaMissil(jogador, missil);
     }
 
     atualizaPosicaoMissil(jogador, missil, tempoFrame);
 
-    if (IsKeyDown(KEY_RIGHT)) jogador->entidade.x += jogador->velocidade * tempoFrame;
-    if (IsKeyDown(KEY_LEFT)) jogador->entidade.x -= jogador->velocidade * tempoFrame;
-    if (IsKeyDown(KEY_UP)) jogador->entidade.y -= jogador->velocidade * tempoFrame;
-    if (IsKeyDown(KEY_DOWN)) jogador->entidade.y += jogador->velocidade * tempoFrame;
+    if (IsKeyDown(KEY_RIGHT)) {
+        jogador->entidade.x += deslocamento;
+        hitBoxJogadorArea = MovDireira;
+        spriteAtual = SPRITE_DIREITA;
+    } else if (IsKeyDown(KEY_LEFT)) {
+        jogador->entidade.x -= deslocamento;
+        hitBoxJogadorArea = MovEsquerda;
+        spriteAtual = SPRITE_ESQUERDA;
+    }
+    
+    if (IsKeyDown(KEY_UP)) jogador->entidade.y -= deslocamento;
+    if (IsKeyDown(KEY_DOWN)) jogador->entidade.y += deslocamento;
 
     if (jogador->entidade.x < 0) 
         jogador->entidade.x = 0;
@@ -27,9 +42,11 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
     if (jogador->entidade.y + jogador->entidade.height > alturaTela) 
         jogador->entidade.y = alturaTela - jogador->entidade.height;
 
+    atualizaSpriteEHitboxesJogador(jogador, spriteAtual, hitBoxJogadorArea);
+
     for (int i = 0; i < 2; i++) {
         //MODIFICAR
-        Inimigo *inimigo = &inimigos[i];
+        INIMIGO *inimigo = &inimigos[i];
         if (inimigo->morto) {
             continue;
         }
@@ -41,7 +58,7 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
             jogador->missilDisparado = false;
         }
 
-        if (verificaColisaoInimigo(jogador->entidade, inimigo->entidade)) {
+        if (verificaColisaoInimigo(jogador->hitboxes, inimigo->entidade)) {
             CloseWindow();
             return;
         }
@@ -50,7 +67,7 @@ void executaJogo(Jogador *jogador, Missil *missil, Inimigo *inimigos, int largur
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    DrawRectangleRec(jogador->entidade, RED);
+    DrawTextureRec(textura, jogador->sprite, (Vector2){ jogador->entidade.x, jogador->entidade.y }, RAYWHITE);
 
     if (jogador->missilDisparado) {
         DrawRectangleRec(missil->entidade, GREEN);

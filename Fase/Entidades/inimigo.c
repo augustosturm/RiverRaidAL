@@ -1,10 +1,10 @@
 #include "entidade.h"
 #include "inimigo.h"
 
-Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX) {
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX) {
     Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
 
-    Inimigo inimigo = {
+    INIMIGO inimigo = {
         entidade,
         velocidade,
         1, // Futuramente ira mudar isso
@@ -17,7 +17,7 @@ Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
     return inimigo;
 }
 
-void moveInimigo(Inimigo *inimigo, int jogadorPosicaoY) {
+void moveInimigo(INIMIGO *inimigo, int jogadorPosicaoY) {
     if (inimigo->movendo) {
         atualizaPosicaoInimigo(inimigo);
     } else {
@@ -27,19 +27,19 @@ void moveInimigo(Inimigo *inimigo, int jogadorPosicaoY) {
     }
 }
 
-void atualizaPosicaoInimigo(Inimigo *inimigo) {
+void atualizaPosicaoInimigo(INIMIGO *inimigo) {
     inimigo->entidade.x += inimigo->velocidade * inimigo->direcao * GetFrameTime();
     
     mudaDirecaoInimigo(inimigo);
 }
 
-void mudaDirecaoInimigo(Inimigo *inimigo) {
+void mudaDirecaoInimigo(INIMIGO *inimigo) {
     if (inimigo->entidade.x > inimigo->maximoX || inimigo->entidade.x < inimigo->minimoX) {
         inimigo->direcao *= -1;
     }
 }
 
-bool verificaJogadorProximo(Inimigo *inimigo, int jogadorPosicaoY) {
+bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY) {
     int distanciaAteJogador = jogadorPosicaoY - inimigo->entidade.y;
     return distanciaAteJogador < DIFPOS;
 }
