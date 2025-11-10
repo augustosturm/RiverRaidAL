@@ -74,9 +74,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
     }
 
     for (int i = 0; i < 2; i++) {
-        if (!inimigos[i].morto) {
-            DrawRectangleRec(inimigos[i].entidade, BLUE);
-        }
+        desesenhaInimigo(inimigos[i], textura);
     }
 
     EndDrawing();

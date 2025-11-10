@@ -103,6 +103,4 @@ void disparaMissil(JOGADOR *jogador, MISSIL *missil);
  */
 void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrido);
 
-//Rectangle trocaTextura();
-
 #endif

@@ -3,8 +3,6 @@
 #include "entidade.h"
 #include "jogador.h"
 
-static const Vector2 TAMANHO_MISSIL = {5.0f, 5.0f};
-static const float VELOCIDADE_MISSIL = 400.0f;
 
 JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Rectangle sprite) {
     const Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
@@ -98,6 +96,18 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
     return colidiu;
 }
 
+void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
+    static const Vector2 TAMANHO_MISSIL = {5.0f, 5.0f};
+    static const float VELOCIDADE_MISSIL = 400.0f;
+
+    if (jogador->missilDisparado) {
+        return;
+    }
+
+    *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL);
+    jogador->missilDisparado = true;
+}
+
 MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade) {
     Vector2 posicaoMissil = {
         jogador.entidade.x + jogador.entidade.width / 2.0f - tamanhoMissil.x / 2.0f,
@@ -112,15 +122,6 @@ MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade) {
     };
 
     return missil;
-}
-
-void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
-    if (jogador->missilDisparado) {
-        return;
-    }
-
-    *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL);
-    jogador->missilDisparado = true;
 }
 
 void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrido) {

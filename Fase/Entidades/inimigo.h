@@ -13,7 +13,12 @@ typedef struct {
     int maximoX;
     int morto;
     int movendo;
+    Rectangle sprite;
 } INIMIGO;
+
+INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX);
+
+INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX);
 
 /**
  * @brief Cria um inimigo com velocidade, direcao e alcance de movimento.
@@ -24,7 +29,7 @@ typedef struct {
  * @param maximoX Limite maximo no eixo X.
  * @return INIMIGO representado por um Rectangle.
  */
-INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX);
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite);
 
 /**
  * @brief Move um inimigo pelo eixo X.
@@ -58,5 +63,7 @@ void mudaDirecaoInimigo(INIMIGO *inimigo);
  * @return true se o jogador esta proximo, false caso contrario.
  */
 bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY);
+
+void desesenhaInimigo(INIMIGO inimigo, Texture2D textura);
 
 #endif
