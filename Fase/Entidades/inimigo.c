@@ -1,30 +1,87 @@
-#include "raylib.h"
 #include "entidade.h"
 #include "inimigo.h"
 
-Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX) {
+
+INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX) {
+    static const Vector2 hitboxHelicoptero = {64.0f, 15.0f};
+    static const float velocidadeHelicoptero = 150.0f;
+    Rectangle spriteHelicoptero = {11, 186, 63, 39};
+    //{83, 186, 63, 39} sprite da helice em outra posição
+
+    return criaInimigo(posicao, hitboxHelicoptero, velocidadeHelicoptero, minimoX, maximoX, spriteHelicoptero);
+}
+
+INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX) {
+    static const Vector2 hitboxNavio= {127.0f, 15.0f};
+    static const float velocidadeNavio = 100.0f;
+    static const Rectangle spriteNavio = {14, 234, 127, 31};
+    
+    return criaInimigo(posicao, hitboxNavio, velocidadeNavio, minimoX, maximoX, spriteNavio);
+}
+
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite) {
     Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
 
-    Inimigo inimigo = {
+    INIMIGO inimigo = {
         entidade,
         velocidade,
         1, // Futuramente ira mudar isso
         minimoX,
         maximoX,
-        0 // Comeca vivo
+        0, // Comeca vivo
+        0, // Comeca parado
+        sprite
     };
 
     return inimigo;
 }
 
-void moveInimigo(Inimigo *inimigo) {
-    inimigo->entidade.x += inimigo->velocidade * inimigo->direcao * GetFrameTime();
+//int geraDirecaoInicial() {}
 
+void moveInimigo(INIMIGO *inimigo, int jogadorPosicaoY) {
+    if (inimigo->movendo) {
+        atualizaPosicaoInimigo(inimigo);
+    } else {
+        if (verificaJogadorProximo(inimigo, jogadorPosicaoY)) {
+            inimigo->movendo = 1;
+        }
+    }
+}
+
+void atualizaPosicaoInimigo(INIMIGO *inimigo) {
+    inimigo->entidade.x += inimigo->velocidade * inimigo->direcao * GetFrameTime();
+    
     mudaDirecaoInimigo(inimigo);
 }
 
-void mudaDirecaoInimigo(Inimigo *inimigo) {
+void mudaDirecaoInimigo(INIMIGO *inimigo) {
     if (inimigo->entidade.x > inimigo->maximoX || inimigo->entidade.x < inimigo->minimoX) {
         inimigo->direcao *= -1;
+    }
+}
+
+bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY) {
+    int distanciaAteJogador = jogadorPosicaoY - inimigo->entidade.y;
+    return distanciaAteJogador < DIFPOS;
+}
+
+void desesenhaInimigo(INIMIGO inimigo, Texture2D textura) {
+    if (!inimigo.morto) {
+        const float spriteWidth = inimigo.sprite.width; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
+        const float spriteHeight = inimigo.sprite.height;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
+        Rectangle source = inimigo.sprite;
+        Rectangle destination = {
+            inimigo.entidade.x,
+            inimigo.entidade.y - 16, // O valor 16 desloca a textura para alinhar com a hitbox reposicionada
+            spriteWidth,
+            spriteHeight
+        };
+
+        if (inimigo.direcao < 0) {
+            source.width *= -1;
+        }
+
+        DrawTexturePro(textura, source, destination, (Vector2){0.0f, 0.0f}, 0.0f, RAYWHITE);
+        //DrawRectangleRec(inimigo.entidade, GREEN);
     }
 }

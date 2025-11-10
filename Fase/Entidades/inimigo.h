@@ -2,6 +2,8 @@
 #define INIMIGO_H
 
 #include "raylib.h"
+#include <stdbool.h>
+#define DIFPOS 200
 
 typedef struct {
     Rectangle entidade;
@@ -10,7 +12,13 @@ typedef struct {
     int minimoX;
     int maximoX;
     int morto;
-} Inimigo;
+    int movendo;
+    Rectangle sprite;
+} INIMIGO;
+
+INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX);
+
+INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX);
 
 /**
  * @brief Cria um inimigo com velocidade, direcao e alcance de movimento.
@@ -19,9 +27,9 @@ typedef struct {
  * @param tamanhoHitbox Tamanho da caixa de colisao.
  * @param minimoX Limite minimo no eixo X.
  * @param maximoX Limite maximo no eixo X.
- * @return Inimigo representado por um Rectangle.
+ * @return INIMIGO representado por um Rectangle.
  */
-Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX);
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite);
 
 /**
  * @brief Move um inimigo pelo eixo X.
@@ -29,7 +37,15 @@ Inimigo criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
  * @param inimigo Ponteiro do inimigo.
  * @return void
  */
-void moveInimigo(Inimigo *inimigo);
+void moveInimigo(INIMIGO *inimigo, int jogadorPosicaoY);
+
+/**
+ * @brief Atualiza a posicao horizontal do inimigo quando ele esta em movimento.
+ *
+ * @param inimigo Ponteiro do inimigo.
+ * @return void
+ */
+void atualizaPosicaoInimigo(INIMIGO *inimigo);
 
 /**
  * @brief Troca a direcao do inimigo quando atinge o limite do movimento.
@@ -37,6 +53,17 @@ void moveInimigo(Inimigo *inimigo);
  * @param inimigo Ponteiro do inimigo.
  * @return void
  */
-void mudaDirecaoInimigo(Inimigo *inimigo);
+void mudaDirecaoInimigo(INIMIGO *inimigo);
+
+/**
+ * @brief Verifica se o jogador esta dentro da distancia de ativacao do inimigo.
+ *
+ * @param inimigo Ponteiro do inimigo.
+ * @param jogadorPosicaoY Posicao Y atual do jogador.
+ * @return true se o jogador esta proximo, false caso contrario.
+ */
+bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY);
+
+void desesenhaInimigo(INIMIGO inimigo, Texture2D textura);
 
 #endif

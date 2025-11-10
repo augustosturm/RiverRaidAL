@@ -7,7 +7,6 @@
 #include "Menu/menuPrincipal.h"
 #include "Fase/Mapa/mapa.h"
 
-
 int main(void) {
     const int larguraTela = 960;
     const int alturaTela = 800;
@@ -24,24 +23,24 @@ int main(void) {
     int teclaPressionada;
     enum ConjuntoTela tela = Titulo;
 
-    const Vector2 tamanhoJogador = {20.0f, 20.0f};
+    const Vector2 tamanhoJogador = {56.0f, 51.0f};
     const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
     const float velocidadeJogador = 200.0f;
-    Jogador jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador);
+    const Rectangle spriteAviao = {102, 70, 56, 51};
+    JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
 
     leMapa(mapa, numArq);
 
-    // const Vector2 tamanhoMissil = {5.0f, 5.0f};
-    // const float velocidadeMissil = 400.0f;
-    Missil missil;
+    MISSIL missil;
 
     const Vector2 tamanhoInimigo = {20.0f, 20.0f};
-    Inimigo inimigos[2];
-    inimigos[0] = criaInimigo((Vector2){400.0f, 100.0f}, tamanhoInimigo, 100.0f, 350, 500);
-    inimigos[1] = criaInimigo((Vector2){200.0f, 200.0f}, tamanhoInimigo, 150.0f, 150, 350);
-
+    INIMIGO inimigos[2];
+    inimigos[0] = criaNavio((Vector2){400.0f, 100.0f}, 350, 500);
+    inimigos[1] = criaHelicoptero((Vector2){200.0f, 200.0f}, 150, 350);
     InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
+
+    const Texture2D textura = LoadTexture("sprites.png");
 
     while (!WindowShouldClose()) {
         if (tela != Jogo) {
@@ -60,16 +59,16 @@ int main(void) {
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
 
-            camera.target.y = jogador.entidade.y - alturaTela + 40;
+            camera.target.y = jogador.entidade.y - alturaTela + 60;
             BeginDrawing();
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
+            // executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura);
             
             EndMode2D();
             EndDrawing();
-
         } else if (tela == Saida) {
             CloseWindow();
             return 0;

@@ -4,16 +4,26 @@
 #include <stdbool.h>
 #include "raylib.h"
 
-typedef struct {
-    Rectangle entidade;
-    float velocidade;
-    bool missilDisparado;
-} Jogador;
+#define NUMHITBOX 2
 
 typedef struct {
     Rectangle entidade;
     float velocidade;
-} Missil;
+    bool missilDisparado;
+    Rectangle sprite;
+    Rectangle hitboxes[NUMHITBOX];
+} JOGADOR;
+
+typedef struct {
+    Rectangle entidade;
+    float velocidade;
+} MISSIL;
+
+enum HitBoxJogador {
+    Parado,
+    MovDireira,
+    MovEsquerda
+};
 
 /**
  * @brief Cria um jogador com posicao inicial, tamanho da hitbox e velocidade.
@@ -21,18 +31,45 @@ typedef struct {
  * @param posicao Posicao inicial do jogador.
  * @param tamanhoHitbox Tamanho da hitbox (largura x altura).
  * @param velocidade Velocidade base do jogador.
- * @return Estrutura Jogador com missilDisparado = false.
+ * @return Estrutura JOGADOR com missilDisparado = false.
  */
-Jogador criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade);
+JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Rectangle sprite);
 
 /**
- * @brief Checa colisao retangular entre jogador e inimigo.
+ * @brief Aplica sprite e hitboxes condizentes com o estado atual do jogador.
  *
- * @param retanguloJogador Retangulo do jogador.
- * @param retanguloInimigo Retangulo do inimigo.
- * @return true se os retangulos se sobrepoem; false caso contrario.
+ * @param jogador Jogador a ser atualizado.
+ * @param sprite Novo recorte da textura.
+ * @param hitboxEstado Enum que indica qual conjunto de hitboxes deve ser usado.
  */
-bool verificaColisaoInimigo(Rectangle retanguloJogador, Rectangle retanguloInimigo);
+void atualizaSpriteEHitboxesJogador(JOGADOR *jogador, Rectangle sprite, enum HitBoxJogador hitboxEstado);
+
+/**
+ * @brief Calcula a hitbox superior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção frontal (topo) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
+ * @brief Calcula a hitbox inferior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção traseira (corpo/asa) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
+ * @brief Checa colisao entre jogador e inimigo usando hitbox ajustada ao formato do aviao.
+ *
+ * @param retanguloJogador Retangulo base do jogador.
+ * @param retanguloInimigo Retangulo do inimigo.
+ * @return true se alguma parte da hitbox ajustada se sobrepor ao inimigo.
+ */
+bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo);
 
 
 /**
@@ -41,9 +78,9 @@ bool verificaColisaoInimigo(Rectangle retanguloJogador, Rectangle retanguloInimi
  * @param jogador Jogador usado como referencia de posicao.
  * @param tamanhoMissil Tamanho do missil.
  * @param velocidade Velocidade vertical do missil.
- * @return Estrutura Missil inicializada.
+ * @return Estrutura MISSIL inicializada.
  */
-Missil criaMissil(Jogador jogador, Vector2 tamanhoMissil, float velocidade);
+MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade);
 
 /**
  * @brief Dispara um missil se nenhum estiver ativo.
@@ -54,7 +91,7 @@ Missil criaMissil(Jogador jogador, Vector2 tamanhoMissil, float velocidade);
  * @param velocidadeMissil Velocidade vertical do missil.
  * @return void
  */
-void disparaMissil(Jogador *jogador, Missil *missil, Vector2 tamanhoMissil, float velocidadeMissil);
+void disparaMissil(JOGADOR *jogador, MISSIL *missil);
 
 /**
  * @brief Atualiza a posicao Y do missil.
@@ -64,6 +101,6 @@ void disparaMissil(Jogador *jogador, Missil *missil, Vector2 tamanhoMissil, floa
  * @param tempoDecorrido Tempo decorrido em segundos desde o ultimo quadro.
  * @return void
  */
-void atualizaPosicaoMissil(Jogador *jogador, Missil *missil, float tempoDecorrido);
+void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrido);
 
 #endif

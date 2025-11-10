@@ -1,7 +1,12 @@
+animacao helicoperozinho
+Direcao começa aleatoriamente
+criar função gera inimigo, aleatorio se gera aviao ou navio
+
 Ajustar:
 Inimigos spawn
 Inimigos direção
 Movimentação do personagem pra frente
+Colocar animação explosão
 
 --------------
 Fazer do zero:
