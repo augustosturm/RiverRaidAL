@@ -1,3 +1,4 @@
+#include <time.h>
 #include "entidade.h"
 #include "inimigo.h"
 
@@ -6,7 +7,6 @@ INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX) {
     static const Vector2 hitboxHelicoptero = {64.0f, 15.0f};
     static const float velocidadeHelicoptero = 150.0f;
     Rectangle spriteHelicoptero = {11, 186, 63, 39};
-    //{83, 186, 63, 39} sprite da helice em outra posição
 
     return criaInimigo(posicao, hitboxHelicoptero, velocidadeHelicoptero, minimoX, maximoX, spriteHelicoptero);
 }
@@ -25,7 +25,7 @@ INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
     INIMIGO inimigo = {
         entidade,
         velocidade,
-        1, // Futuramente ira mudar isso
+        geraDirecaoInicial(),
         minimoX,
         maximoX,
         0, // Comeca vivo
@@ -36,7 +36,10 @@ INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
     return inimigo;
 }
 
-//int geraDirecaoInicial() {}
+int geraDirecaoInicial(void) {
+    SetRandomSeed((unsigned)time(NULL));
+    return GetRandomValue(0, 1)*2 - 1;
+}
 
 void moveInimigo(INIMIGO *inimigo, int jogadorPosicaoY) {
     if (inimigo->movendo) {
@@ -65,7 +68,7 @@ bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY) {
     return distanciaAteJogador < DIFPOS;
 }
 
-void desesenhaInimigo(INIMIGO inimigo, Texture2D textura) {
+void desenhaInimigo(INIMIGO inimigo, Texture2D textura) {
     if (!inimigo.morto) {
         const float spriteWidth = inimigo.sprite.width; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
         const float spriteHeight = inimigo.sprite.height;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
@@ -82,6 +85,19 @@ void desesenhaInimigo(INIMIGO inimigo, Texture2D textura) {
         }
 
         DrawTexturePro(textura, source, destination, (Vector2){0.0f, 0.0f}, 0.0f, RAYWHITE);
-        //DrawRectangleRec(inimigo.entidade, GREEN);
+    }
+}
+
+void atualizaAnimacaoHelice(INIMIGO *inimigo, float delta) {
+    static float tempo = 0.0f;
+    static int frame = 0;
+
+    tempo += delta;
+    if (tempo >= 0.1f) {
+        tempo = 0.0f;
+        frame = !frame;
+
+        if (frame == 0) inimigo->sprite.x = 10;
+        else inimigo->sprite.x = 83;
     }
 }

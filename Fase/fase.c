@@ -65,17 +65,14 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         }
     }
 
-    //BeginDrawing();
-
     DrawTextureRec(textura, jogador->sprite, (Vector2){ jogador->entidade.x, jogador->entidade.y }, RAYWHITE);
 
     if (jogador->missilDisparado) {
-        DrawRectangleRec(missil->entidade, GREEN);
+        desenhaMissil(*missil, textura);
     }
 
     for (int i = 0; i < 2; i++) {
-        desesenhaInimigo(inimigos[i], textura);
+        atualizaAnimacaoHelice(&inimigos[i], GetFrameTime());
+        desenhaInimigo(inimigos[i], textura);
     }
-
-    //EndDrawing();
 }

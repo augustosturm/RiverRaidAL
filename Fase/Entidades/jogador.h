@@ -17,6 +17,7 @@ typedef struct {
 typedef struct {
     Rectangle entidade;
     float velocidade;
+    Rectangle sprite;
 } MISSIL;
 
 enum HitBoxJogador {
@@ -31,6 +32,7 @@ enum HitBoxJogador {
  * @param posicao Posicao inicial do jogador.
  * @param tamanhoHitbox Tamanho da hitbox (largura x altura).
  * @param velocidade Velocidade base do jogador.
+ * @param sprite Recorte inicial da textura da nave.
  * @return Estrutura JOGADOR com missilDisparado = false.
  */
 JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Rectangle sprite);
@@ -63,11 +65,11 @@ Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJo
 Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
 
 /**
- * @brief Checa colisao entre jogador e inimigo usando hitbox ajustada ao formato do aviao.
+ * @brief Checa colisao entre jogador e inimigo usando as duas hitboxes pre-ajustadas.
  *
- * @param retanguloJogador Retangulo base do jogador.
- * @param retanguloInimigo Retangulo do inimigo.
- * @return true se alguma parte da hitbox ajustada se sobrepor ao inimigo.
+ * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
+ * @param entidadeInimigo Retangulo atual do inimigo.
+ * @return true se qualquer hitbox do jogador intersectar o inimigo.
  */
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo);
 
@@ -78,17 +80,16 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
  * @param jogador Jogador usado como referencia de posicao.
  * @param tamanhoMissil Tamanho do missil.
  * @param velocidade Velocidade vertical do missil.
+ * @param sprite Posicao da textura que tem o sprite do missil 
  * @return Estrutura MISSIL inicializada.
  */
-MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade);
+MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade, Rectangle sprite);
 
 /**
  * @brief Dispara um missil se nenhum estiver ativo.
  *
  * @param jogador Ponteiro para o jogador.
  * @param missil Ponteiro para o missil a ser inicializado.
- * @param tamanhoMissil Tamanho do missil.
- * @param velocidadeMissil Velocidade vertical do missil.
  * @return void
  */
 void disparaMissil(JOGADOR *jogador, MISSIL *missil);
@@ -102,5 +103,14 @@ void disparaMissil(JOGADOR *jogador, MISSIL *missil);
  * @return void
  */
 void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrido);
+
+/**
+ * @brief Desenha o missil usando os dados atuais de transformacao.
+ *
+ * @param missil Estrutura que contem o retangulo e o sprite do missil.
+ * @param textura Textura carregada que possui o sprite do missil.
+ * @return void
+ */
+void desenhaMissil(MISSIL missil, Texture2D textura);
 
 #endif

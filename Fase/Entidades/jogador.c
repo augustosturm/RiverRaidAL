@@ -97,18 +97,19 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
 }
 
 void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
-    static const Vector2 TAMANHO_MISSIL = {5.0f, 5.0f};
-    static const float VELOCIDADE_MISSIL = 400.0f;
+    static const Vector2 TAMANHO_MISSIL = {22.0f, 86.0f};
+    static const float VELOCIDADE_MISSIL = 800.0f;
+    static const Rectangle SPRITE_MISSIL = {22, 86, 7, 31};
 
     if (jogador->missilDisparado) {
         return;
     }
 
-    *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL);
+    *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL, SPRITE_MISSIL);
     jogador->missilDisparado = true;
 }
 
-MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade) {
+MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade, Rectangle sprite) {
     Vector2 posicaoMissil = {
         jogador.entidade.x + jogador.entidade.width / 2.0f - tamanhoMissil.x / 2.0f,
         jogador.entidade.y
@@ -118,7 +119,8 @@ MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade) {
 
     MISSIL missil = {
         entidadeMissil,
-        velocidade
+        velocidade,
+        sprite
     };
 
     return missil;
@@ -133,4 +135,18 @@ void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrid
     if (missil->entidade.y + missil->entidade.height < 0) {
         jogador->missilDisparado = false;
     }
+}
+
+void desenhaMissil(MISSIL missil, Texture2D textura) {
+    const float spriteWidth = missil.sprite.width; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
+    const float spriteHeight = missil.sprite.height;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
+    Rectangle source = missil.sprite;
+    Rectangle destination = {
+        missil.entidade.x,
+        missil.entidade.y,
+        spriteWidth,
+        spriteHeight
+    };
+
+    DrawTexturePro(textura, source, destination, (Vector2){0.0f, 0.0f}, 0.0f, RAYWHITE);
 }

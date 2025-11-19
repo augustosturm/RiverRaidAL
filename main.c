@@ -33,7 +33,6 @@ int main(void) {
 
     MISSIL missil;
 
-    const Vector2 tamanhoInimigo = {20.0f, 20.0f};
     INIMIGO inimigos[2];
     inimigos[0] = criaNavio((Vector2){400.0f, 100.0f}, 350, 500);
     inimigos[1] = criaHelicoptero((Vector2){200.0f, 200.0f}, 150, 350);

@@ -1,5 +1,3 @@
-animacao helicoperozinho
-Direcao começa aleatoriamente
 criar função gera inimigo, aleatorio se gera aviao ou navio
 
 Ajustar:
