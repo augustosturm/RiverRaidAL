@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include "Menu/menuPrincipal.h"
 
 int obtemSelecaoUsuario(bool jogando) {

@@ -3,13 +3,14 @@
 #include "fase.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
+#include "Pontuacao/pontuacao.h"
 #include "Mapa/mapa.h"
 
 static const Rectangle SPRITE_PARADO = {102, 70, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
@@ -57,6 +58,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         if (CheckCollisionRecs(missil->entidade, inimigo->entidade)) {
             inimigo->morto = 1;
             jogador->missilDisparado = false;
+            adicionaPontos(pontuacao, inimigo->pontos);
         }
 
         if (verificaColisaoInimigo(jogador->hitboxes, inimigo->entidade)) {
@@ -75,4 +77,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         atualizaAnimacaoHelice(&inimigos[i], GetFrameTime());
         desenhaInimigo(inimigos[i], textura);
     }
+
+    DrawText(TextFormat("Score: %d", pontuacao->pontos), 10, 10, 20, BLACK);
+
 }

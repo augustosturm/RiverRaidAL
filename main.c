@@ -3,6 +3,7 @@
 #include "Fase/Entidades/entidade.h"
 #include "Fase/Entidades/jogador.h"
 #include "Fase/Entidades/inimigo.h"
+#include "Fase/Pontuacao/pontuacao.h"
 #include "Fase/fase.h"
 #include "Menu/menuPrincipal.h"
 #include "Fase/Mapa/mapa.h"
@@ -32,6 +33,7 @@ int main(void) {
     leMapa(mapa, numArq);
 
     MISSIL missil;
+    PONTUACAO pontuacao = {0};
 
     INIMIGO inimigos[2];
     inimigos[0] = criaNavio((Vector2){400.0f, 100.0f}, 350, 500);
@@ -63,8 +65,7 @@ int main(void) {
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq);
-            // executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao);
             
             EndMode2D();
             EndDrawing();

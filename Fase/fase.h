@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
+#include "Pontuacao/pontuacao.h"
 
 /**
  * @brief Executa um ciclo completo da fase, tratando entrada, atualização e renderização.
@@ -18,7 +19,8 @@
  * @param larguraTela Limite horizontal usado para restringir o movimento do jogador.
  * @param alturaTela Limite vertical usado para restringir o movimento do jogador.
  * @param textura Spritesheet usada para renderizar o jogador com o recorte correto.
+ * @param pontuacao Estrutura que acumula os pontos ganhos ao destruir inimigos.
  */
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura);
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao);
 
 #endif

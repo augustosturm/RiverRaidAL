@@ -3,7 +3,7 @@ CFLAGS := -I. -IEntidades -IMenuScore -Wall -Wextra -std=c99
 LDFLAGS := -lraylib -lm -lpthread -ldl -lrt -lX11
 
 TARGET := main.out
-SRC := main.c $(wildcard Fase/*.c) $(wildcard Fase/Entidades/*.c) $(wildcard Menu/*.c) $(wildcard Menu/MenuScore/*.c) $(wildcard Fase/Mapa/*.c)
+SRC := main.c $(wildcard Fase/*.c) $(wildcard Fase/Entidades/*.c) $(wildcard Fase/Pontuacao/*.c) $(wildcard Menu/*.c) $(wildcard Menu/MenuScore/*.c) $(wildcard Fase/Mapa/*.c)
 OBJ := $(SRC:.c=.o)
 
 .PHONY: all clean run

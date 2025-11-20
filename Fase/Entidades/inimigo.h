@@ -14,6 +14,7 @@ typedef struct {
     int morto;
     int movendo;
     Rectangle sprite;
+    int pontos;
 } INIMIGO;
 
 /**
@@ -43,9 +44,10 @@ INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX);
  * @param tamanhoHitbox Tamanho da caixa de colisao.
  * @param minimoX Limite minimo no eixo X.
  * @param maximoX Limite maximo no eixo X.
+ * @param pontos Quantidade de pontos que o inimigo vale.
  * @return INIMIGO representado por um Rectangle.
  */
-INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite);
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite, int pontos);
 
 /**
  * @brief Escolhe aleatoriamente se o inimigo inicia movendo para a esquerda ou direita.

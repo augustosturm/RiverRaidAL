@@ -6,20 +6,22 @@
 INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX) {
     static const Vector2 hitboxHelicoptero = {64.0f, 15.0f};
     static const float velocidadeHelicoptero = 150.0f;
+    static const int pontosHelicoptero = 100;
     Rectangle spriteHelicoptero = {11, 186, 63, 39};
 
-    return criaInimigo(posicao, hitboxHelicoptero, velocidadeHelicoptero, minimoX, maximoX, spriteHelicoptero);
+    return criaInimigo(posicao, hitboxHelicoptero, velocidadeHelicoptero, minimoX, maximoX, spriteHelicoptero, pontosHelicoptero);
 }
 
 INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX) {
     static const Vector2 hitboxNavio= {127.0f, 15.0f};
     static const float velocidadeNavio = 100.0f;
+    static const int pontosNavio = 75;
     static const Rectangle spriteNavio = {14, 234, 127, 31};
     
-    return criaInimigo(posicao, hitboxNavio, velocidadeNavio, minimoX, maximoX, spriteNavio);
+    return criaInimigo(posicao, hitboxNavio, velocidadeNavio, minimoX, maximoX, spriteNavio, pontosNavio);
 }
 
-INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite) {
+INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite, int pontos) {
     Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
 
     INIMIGO inimigo = {
@@ -30,7 +32,8 @@ INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
         maximoX,
         0, // Comeca vivo
         0, // Comeca parado
-        sprite
+        sprite,
+        pontos
     };
 
     return inimigo;
