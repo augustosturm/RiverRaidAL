@@ -38,6 +38,13 @@ INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX);
 INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX);
 
 /**
+ * @brief Escolhe aleatoriamente criar um navio ou helicoptero com os valores padrao.
+ *
+ * @return Estrutura INIMIGO representando o tipo sorteado.
+ */
+INIMIGO criaInimigoAleatorio(Vector2 posicao, int minimoX, int maximoX);
+
+/**
  * @brief Cria um inimigo com velocidade, direcao e alcance de movimento.
  *
  * @param posicao Posicao inicial.

@@ -1,7 +1,5 @@
-#include <time.h>
 #include "entidade.h"
 #include "inimigo.h"
-
 
 INIMIGO criaHelicoptero(Vector2 posicao, int minimoX, int maximoX) {
     static const Vector2 hitboxHelicoptero = {64.0f, 15.0f};
@@ -19,6 +17,16 @@ INIMIGO criaNavio(Vector2 posicao, int minimoX, int maximoX) {
     static const Rectangle spriteNavio = {14, 234, 127, 31};
     
     return criaInimigo(posicao, hitboxNavio, velocidadeNavio, minimoX, maximoX, spriteNavio, pontosNavio);
+}
+
+INIMIGO criaInimigoAleatorio(Vector2 posicao, int minimoX, int maximoX) {
+    const bool criaHelicopteroAleatorio = GetRandomValue(0, 1);
+    
+    if (criaHelicopteroAleatorio) {
+        return criaHelicoptero(posicao, minimoX, maximoX);
+    }
+
+    return criaNavio(posicao, minimoX, maximoX);
 }
 
 INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, int minimoX, int maximoX, Rectangle sprite, int pontos) {
@@ -40,7 +48,6 @@ INIMIGO criaInimigo(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, in
 }
 
 int geraDirecaoInicial(void) {
-    SetRandomSeed((unsigned)time(NULL));
     return GetRandomValue(0, 1)*2 - 1;
 }
 
@@ -92,15 +99,10 @@ void desenhaInimigo(INIMIGO inimigo, Texture2D textura) {
 }
 
 void atualizaAnimacaoHelice(INIMIGO *inimigo, float delta) {
-    static float tempo = 0.0f;
-    static int frame = 0;
+    if (inimigo->entidade.width != 64.0f) return;
 
-    tempo += delta;
-    if (tempo >= 0.1f) {
-        tempo = 0.0f;
-        frame = !frame;
+    const float intervalo = 0.04f;
+    int frame = ((int)(GetTime() / intervalo)) & 1;
 
-        if (frame == 0) inimigo->sprite.x = 10;
-        else inimigo->sprite.x = 83;
-    }
+    inimigo->sprite.x = (frame == 0) ? 10 : 83;
 }

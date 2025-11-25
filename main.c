@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <time.h>
 #include "raylib.h"
 #include "Fase/Entidades/entidade.h"
 #include "Fase/Entidades/jogador.h"
@@ -35,9 +36,11 @@ int main(void) {
     MISSIL missil;
     PONTUACAO pontuacao = {0};
 
+    SetRandomSeed((unsigned)time(NULL));
+
     INIMIGO inimigos[2];
-    inimigos[0] = criaNavio((Vector2){400.0f, 100.0f}, 350, 500);
-    inimigos[1] = criaHelicoptero((Vector2){200.0f, 200.0f}, 150, 350);
+    inimigos[0] = criaInimigoAleatorio((Vector2){400.0f, 100.0f}, 350, 500);
+    inimigos[1] = criaInimigoAleatorio((Vector2){200.0f, 200.0f}, 150, 350);
     InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
 
