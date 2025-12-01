@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include "raylib.h"
 #include "Fase/Entidades/entidade.h"
@@ -8,6 +10,8 @@
 #include "Fase/fase.h"
 #include "Menu/menuPrincipal.h"
 #include "Fase/Mapa/mapa.h"
+#include "Menu/MenuScore/nomeJogador.h"
+#include "Menu/MenuScore/sistemaPontuacao.h"
 
 int main(void) {
     const int larguraTela = 960;
@@ -30,7 +34,7 @@ int main(void) {
     const float velocidadeJogador = 200.0f;
     const Rectangle spriteAviao = {102, 70, 56, 51};
     JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
-
+    
     leMapa(mapa, numArq);
 
     MISSIL missil;
@@ -71,6 +75,31 @@ int main(void) {
             executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao);
             
             EndMode2D();
+            EndDrawing();
+        } else if (tela == JogadoresPontos) {
+            if (teclaPressionada == KEY_ENTER) {
+                tela = MenuPrincipal;
+            }
+
+            BeginDrawing();
+            ClearBackground(BLUE);
+
+            JogadorPontos ranking[MAXRANKING] = {0};
+            int totalJogadores = leRanking(ranking, MAXRANKING);
+
+            if (totalJogadores < 0) {
+                tela = MenuPrincipal;
+            } else {
+                if (totalJogadores > 0) {
+                    ordenaRankingPorPontuacao(ranking, totalJogadores);
+                    imprimeRankingJogadores(ranking, totalJogadores);
+
+                    DrawText("Pressione ENTER para voltar ao menu.", 20, 740, 30, YELLOW);
+                } else {
+                    DrawText("Nenhum jogador com pontuação salva.", 20, 40, 30, YELLOW);
+                }
+            }
+
             EndDrawing();
         } else if (tela == Saida) {
             CloseWindow();

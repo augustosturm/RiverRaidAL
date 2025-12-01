@@ -109,8 +109,7 @@ void desenhaInimigo(INIMIGO inimigo, Texture2D textura);
  * @brief Alterna o sprite da helice para simular a animacao do helicoptero.
  *
  * @param inimigo Ponteiro do inimigo que tera o sprite atualizado.
- * @param delta Tempo (em segundos) decorrido desde o ultimo frame.
  */
-void atualizaAnimacaoHelice(INIMIGO *inimigo, float delta);
+void atualizaAnimacaoHelice(INIMIGO *inimigo);
 
 #endif

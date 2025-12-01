@@ -17,7 +17,7 @@ void desenhaTelaTitulo(void) {
     ClearBackground(BLUE);
     DrawText("RiverRaid AL Edicao +", 100, 100, 50, YELLOW);
     DrawText("Ver. Alpha", 100, 160, 30, YELLOW);
-    DrawText("Press ENTER to play", 100, 210, 25, YELLOW);
+    DrawText("Pressione ENTER para jogar", 100, 210, 25, YELLOW);
     EndDrawing();
 }
 
@@ -45,6 +45,10 @@ void entraTela(int teclaPressionada, enum OpcaoMenuPrincipal opcao, enum Conjunt
 
     if (teclaPressionada == KEY_ENTER && opcao == Sair) {
         *tela = Saida;
+    }
+
+    if (teclaPressionada == KEY_ENTER && opcao == Ranking) {
+        *tela = JogadoresPontos;
     }
 }
 

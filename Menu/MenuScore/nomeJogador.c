@@ -20,11 +20,9 @@ void insereNomeJogador(int tamanhoNome, int *posicao, char *nomeJogador) {
     *posicao = posicaoLocal;
 }
 
-void imprimeNomeJogador(char nomeJogador[]) {
-    // So teste
-    // Quando fizer a tela de placar, vai ter que mudar aqui
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    DrawText(nomeJogador, 20, 70, 30, BLACK);
-    EndDrawing();
+void imprimeNomeJogador(const char *nomeJogador, int pontos, int posRanking) {
+    const int posVertical = posRanking * 40 + 70;
+
+    DrawText(TextFormat("%02d. %s", posRanking + 1, nomeJogador), 20, posVertical, 30, YELLOW);
+    DrawText(TextFormat("%d", pontos), 400, posVertical, 30, YELLOW);
 }

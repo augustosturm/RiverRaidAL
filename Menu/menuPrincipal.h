@@ -8,7 +8,8 @@ enum ConjuntoTela {
     Titulo,
     MenuPrincipal,
     Jogo,
-    Saida
+    Saida,
+    JogadoresPontos
 };
 
 enum OpcaoMenuPrincipal {

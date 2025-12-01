@@ -98,7 +98,7 @@ void desenhaInimigo(INIMIGO inimigo, Texture2D textura) {
     }
 }
 
-void atualizaAnimacaoHelice(INIMIGO *inimigo, float delta) {
+void atualizaAnimacaoHelice(INIMIGO *inimigo) {
     if (inimigo->entidade.width != 64.0f) return;
 
     const float intervalo = 0.04f;

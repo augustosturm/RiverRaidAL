@@ -74,10 +74,9 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
     }
 
     for (int i = 0; i < 2; i++) {
-        atualizaAnimacaoHelice(&inimigos[i], GetFrameTime());
+        atualizaAnimacaoHelice(&inimigos[i]);
         desenhaInimigo(inimigos[i], textura);
     }
 
     DrawText(TextFormat("Score: %d", pontuacao->pontos), 10, 10, 20, BLACK);
-
 }
