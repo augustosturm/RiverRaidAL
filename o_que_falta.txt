@@ -4,7 +4,6 @@ Ajustar:
 Inimigos spawn
 nave spawn
 Inimigos direção
-Movimentação do personagem pra frente
 Colocar animação explosão
 Sistema de pontuação
 
@@ -17,3 +16,5 @@ Gasolina
 --------------
 Feito:
 Tela seguindo corretamente
+pontes
+Movimentação do personagem pra frente

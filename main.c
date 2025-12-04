@@ -18,6 +18,7 @@ int main(void) {
     const int alturaTela = 800;
     int numArq = 3;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
+    Rectangle terrenos[100];
 
     Camera2D camera = {0};
     camera.target = (Vector2){0.0f, 0.0f};   // Ponto do mundo que a câmera "olha"
@@ -73,7 +74,7 @@ int main(void) {
             BeginDrawing();
             BeginMode2D(camera);
 
-            desenhaMapa(mapa, numArq);
+            desenhaMapa(mapa, numArq, terrenos);
             executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq);
             
             EndMode2D();
