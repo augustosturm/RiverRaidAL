@@ -1,16 +1,16 @@
-TTTT  TTT       TTTTTTTT
+TTTTTTTTT       TTTT  TT
 TTTTTTTT   X      TTTTTT
 TTTTTTT            TTTTT
 TTTTTT             TTTTT
 TTTTTT         X   TTTTT
 TTTTTTT            TTTTT
-TTTTTTT           TTTTTT
-TTTTTTT            TTTTT
-TTTTTTT           TTTTTT
-TTTTTTT           TTTTTT
-TTTTTT   X         TTTTT
-TTTTTT              TTTT
-TTTTT                TTT
+TTTTTTTT         TTTTTTT
+TTTTTTTTT       TTTTTTTT
+TTTTTTTTT   T    TTTTTTT
+TTTTTTT     TTT   TTTTTT
+TTTTTT   X TTTTTT  TTTTT
+TTTTTT    TTTTTTT   TTTT
+TTTTT       TTTT     TTT
 TTTTT             X TTTT
 TTTTT               TTTT
 TTTTT       X       TTTT

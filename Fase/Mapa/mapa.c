@@ -39,17 +39,26 @@ void desenhaMapa(char mapa[][24], int numArq){
     int yNormal = ((numArq-1)*-20);
 
     ClearBackground(RAYWHITE);
+
     for(int i = 0; i < (numArq*20); i++){
+
         for(int j = 0; j < 24; j++){
-            
             if(mapa[i][j] == 'T')
                 DrawRectangle(j*40, yNormal*40, 40, 40, GREEN);
             else if(mapa[i][j] == ' ')
                 DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
             else if(mapa[i][j] == 'X')
                 DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
+            else if(mapa[i][j] == 'A')
+                DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
         }
-    yNormal++;
+
+        yNormal++;
+        if ((i % 20) == 19) {
+            for (int j = 0; j < 24; j++) {
+                DrawRectangle(j * 40, yNormal * 40, 40, 40, BROWN);
+            }
+            yNormal++;
+        }
     }
-    //EndDrawing();
 }

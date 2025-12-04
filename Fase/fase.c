@@ -6,11 +6,11 @@
 #include "Pontuacao/pontuacao.h"
 #include "Mapa/mapa.h"
 
-static const Rectangle SPRITE_PARADO = {102, 70, 56, 51};
+static const Rectangle SPRITE_PARADO = {102, 71, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
@@ -31,14 +31,15 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         hitBoxJogadorArea = MovEsquerda;
         spriteAtual = SPRITE_ESQUERDA;
     }
-    
-    if (IsKeyDown(KEY_UP)) jogador->entidade.y -= deslocamento;
-    if (IsKeyDown(KEY_DOWN)) jogador->entidade.y += deslocamento;
+    jogador->entidade.y -= deslocamento;
+
+    if (IsKeyDown(KEY_UP)) jogador->entidade.y -= deslocamento*0.5;
+    if (IsKeyDown(KEY_DOWN)) jogador->entidade.y += deslocamento*0.5;
 
     if (jogador->entidade.x < 0) 
         jogador->entidade.x = 0;
-    if (jogador->entidade.y < 0) 
-        jogador->entidade.y = 0;
+    if (jogador->entidade.y < ((numArq-1)*-800)) 
+        jogador->entidade.y = ((numArq-1)*-800);
     if (jogador->entidade.x + jogador->entidade.width > larguraTela) 
         jogador->entidade.x = larguraTela - jogador->entidade.width;
     if (jogador->entidade.y + jogador->entidade.height > alturaTela) 
@@ -77,6 +78,4 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         atualizaAnimacaoHelice(&inimigos[i]);
         desenhaInimigo(inimigos[i], textura);
     }
-
-    DrawText(TextFormat("Score: %d", pontuacao->pontos), 10, 10, 20, BLACK);
 }

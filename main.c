@@ -16,7 +16,7 @@
 int main(void) {
     const int larguraTela = 960;
     const int alturaTela = 800;
-    int numArq = 2;  // número de mapas
+    int numArq = 3;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
 
     Camera2D camera = {0};
@@ -31,7 +31,7 @@ int main(void) {
 
     const Vector2 tamanhoJogador = {56.0f, 51.0f};
     const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
-    const float velocidadeJogador = 200.0f;
+    const float velocidadeJogador = 150.0f;
     const Rectangle spriteAviao = {102, 70, 56, 51};
     JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
     
@@ -67,14 +67,20 @@ int main(void) {
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
 
-            camera.target.y = jogador.entidade.y - alturaTela + 60;
+            if(camera.target.y >= ((numArq-1)*-800)+3)
+                camera.target.y = jogador.entidade.y - alturaTela + 150;
+
             BeginDrawing();
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq);
             
             EndMode2D();
+            
+            DrawRectangle(0, 750, 960, 50, GRAY);
+            DrawText(TextFormat("Score: %d", pontuacao.pontos), 10, 770, 20, BLACK);
+
             EndDrawing();
         } else if (tela == JogadoresPontos) {
             if (teclaPressionada == KEY_ENTER) {
