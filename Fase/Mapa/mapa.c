@@ -34,9 +34,10 @@ void leMapa(char mapa[][24], int numArq) {
     }
 }
 
-void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[]){
+void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[], int *numTerreno){
 
     int yNormal = ((numArq-1)*-20);
+    *numTerreno = 0;
 
     ClearBackground(RAYWHITE);
 
@@ -50,9 +51,10 @@ void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[]){
 
             if(mapa[i][j] == 'T'){
                 DrawRectangle(posx, posy, width, height, GREEN);
-                if ((i % 20) >= 3 && (i % 20) <= 6){
-                    terrenos[(i%20)*j] = (Rectangle){posx, posy, width, height};
-                }
+                //if ((i % 20) >= 3 && (i % 20) <= 6){
+                    terrenos[*numTerreno] = (Rectangle){posx, posy, width, height};
+                    *numTerreno += 1;
+                //}
             }
             else if(mapa[i][j] == ' ')
                 DrawRectangle(posx, posy, width, height, SKYBLUE);

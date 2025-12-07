@@ -2,6 +2,7 @@
 #define JOGADOR_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include "raylib.h"
 
 #define NUMHITBOX 2
@@ -65,6 +66,24 @@ Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJo
 Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
 
 /**
+ * @brief Calcula a hitbox superior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção frontal (topo) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxLateralEsquerdaJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
+ * @brief Calcula a hitbox superior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção frontal (topo) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxLateralDireitaJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
  * @brief Checa colisao entre jogador e inimigo usando as duas hitboxes pre-ajustadas.
  *
  * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
@@ -72,6 +91,16 @@ Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJo
  * @return true se qualquer hitbox do jogador intersectar o inimigo.
  */
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo);
+
+/**
+ * @brief Checa colisao entre jogador e inimigo usando as duas hitboxes pre-ajustadas.
+ *
+ * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
+ * @param entidadeInimigo Retangulo atual do inimigo.
+ * @return true se qualquer hitbox do jogador intersectar o inimigo.
+ */
+bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno);
+
 
 
 /**

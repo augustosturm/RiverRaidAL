@@ -9,6 +9,6 @@
 
 void leMapa(char mapa[][24], int numArq);
 
-void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[]);
+void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[], int *numTerreno);
 
 #endif

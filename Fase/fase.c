@@ -10,7 +10,7 @@ static const Rectangle SPRITE_PARADO = {102, 71, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
@@ -63,6 +63,11 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         }
 
         if (verificaColisaoInimigo(jogador->hitboxes, inimigo->entidade)) {
+            CloseWindow();
+            return;
+        }
+
+        if (verificaColisaoTerreno(jogador->hitboxes, Terrenos, numTerreno)) {
             CloseWindow();
             return;
         }

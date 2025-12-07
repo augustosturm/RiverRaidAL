@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include "raylib.h"
 #include "entidade.h"
 #include "jogador.h"
@@ -24,6 +25,8 @@ void atualizaSpriteEHitboxesJogador(JOGADOR *jogador, Rectangle sprite, enum Hit
     jogador->sprite = sprite;
     jogador->hitboxes[0] = atualizaHitboxSuperiorJogador(jogador->entidade, hitboxEstado);
     jogador->hitboxes[1] = atualizaHitboxInferiorJogador(jogador->entidade, hitboxEstado);
+    //jogador->hitboxes[2] = atualizaHitboxLateralEsquerdaJogador(jogador->entidade, hitboxEstado);
+    //jogador->hitboxes[3] = atualizaHitboxLateralDireitaJogador(jogador->entidade, hitboxEstado);
 }
 
 Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams) {
@@ -84,12 +87,87 @@ Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJo
     };
 }
 
+Rectangle atualizaHitboxLateralEsquerdaJogador(Rectangle entidadeJogador, enum HitBoxJogador estado) {
+    float recuoMaior = 0.25f; // ajuste fino conforme o sprite
+    float recuoMenor = 0.10f;
+
+    float recuoEsq;
+
+    switch (estado) {
+        case Parado:
+            recuoEsq = 0.0f;
+            break;
+        case MovEsquerda:
+            recuoEsq = recuoMaior;
+            break;
+        case MovDireira:
+            recuoEsq = recuoMenor;
+            break;
+        default:
+            recuoEsq = 0.0f;
+            break;
+    }
+
+    return (Rectangle){
+        entidadeJogador.x + entidadeJogador.width * recuoEsq,
+        entidadeJogador.y,
+        entidadeJogador.width * (0.15f),   // largura da lateral
+        entidadeJogador.height
+    };
+}
+
+Rectangle atualizaHitboxLateralDireitaJogador(Rectangle entidadeJogador, enum HitBoxJogador estado) {
+    float recuoMaior = 0.25f; 
+    float recuoMenor = 0.10f;
+
+    float recuoDir;
+
+    switch (estado) {
+        case Parado:
+            recuoDir = 0.0f;
+            break;
+        case MovDireira:
+            recuoDir = recuoMaior;
+            break;
+        case MovEsquerda:
+            recuoDir = recuoMenor;
+            break;
+        default:
+            recuoDir = 0.0f;
+            break;
+    }
+
+    return (Rectangle){
+        entidadeJogador.x + entidadeJogador.width - entidadeJogador.width * recuoDir - (entidadeJogador.width * 0.15f),
+        entidadeJogador.y,
+        entidadeJogador.width * (0.15f),
+        entidadeJogador.height
+    };
+}
+
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo) {
     bool colidiu = false;
 
     for (int h = 0; h < NUMHITBOX; h++) {
         if (CheckCollisionRecs(hitboxesJogador[h], entidadeInimigo)) {
             colidiu = true;
+            printf("\nbateu\n");
+        }
+    }
+    
+    return colidiu;
+}
+
+bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno) {
+    bool colidiu = false;
+    printf("%d\n", numTerreno);
+
+    for (int h = 0; h < NUMHITBOX; h++) {
+        for (int i = 0; i < numTerreno; i++){
+            if (CheckCollisionRecs(hitboxesJogador[h], Terrenos[i])) {
+                colidiu = true;
+                printf("\nbateuTerreno\n");
+            }
         }
     }
     
