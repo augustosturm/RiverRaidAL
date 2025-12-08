@@ -160,7 +160,6 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
 
 bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno) {
     bool colidiu = false;
-    printf("%d\n", numTerreno);
 
     for (int h = 0; h < NUMHITBOX; h++) {
         for (int i = 0; i < numTerreno; i++){

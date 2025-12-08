@@ -37,16 +37,27 @@ int main(void) {
     const Rectangle spriteAviao = {102, 70, 56, 51};
     JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
     
-    leMapa(mapa, numArq);
+    Vector2 inimigosPos[50];
+    int numInimigos = 0;
+
+    leMapa(mapa, numArq, inimigosPos, &numInimigos);
 
     MISSIL missil;
     PONTUACAO pontuacao = {0};
 
     SetRandomSeed((unsigned)time(NULL));
 
-    INIMIGO inimigos[2];
-    inimigos[0] = criaInimigoAleatorio((Vector2){400.0f, 100.0f}, 350, 500);
-    inimigos[1] = criaInimigoAleatorio((Vector2){200.0f, 200.0f}, 150, 350);
+    INIMIGO inimigos[numInimigos];
+
+    printf("\n\n%d\n\n", numInimigos);
+
+    /*for(int i = 0; i < numInimigos; i++){
+        inimigos[i] = criaInimigoAleatorio(inimigosPos[i], 300, 600);
+    }*/
+
+    //inimigos[0] = criaInimigoAleatorio((Vector2){400.0f, 100.0f}, 350, 500);
+    //inimigos[1] = criaInimigoAleatorio((Vector2){200.0f, 200.0f}, 150, 350);
+
     InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
 

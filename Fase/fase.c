@@ -47,7 +47,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
 
     atualizaSpriteEHitboxesJogador(jogador, spriteAtual, hitBoxJogadorArea);
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 15; i++) {
         //MODIFICAR
         INIMIGO *inimigo = &inimigos[i];
         if (inimigo->morto) {

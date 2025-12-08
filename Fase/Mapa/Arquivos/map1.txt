@@ -13,7 +13,7 @@ TTTTTT    TTTTTTT   TTTT
 TTTTT       TTTT     TTT
 TTTTT             X TTTT
 TTTTT               TTTT
-TTTTT       X       TTTT
+TTTTT               TTTT
 TTTTTT              TTTT
 TTTTTTT            TTTTT
 TTTTTTTTT         TTTTTT
