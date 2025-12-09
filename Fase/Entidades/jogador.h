@@ -113,4 +113,12 @@ void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrid
  */
 void desenhaMissil(MISSIL missil, Texture2D textura);
 
+/**
+ * @brief Desenha o jogador e suas hitboxes usando a textura informada.
+ *
+ * @param jogador Ponteiro constante para o jogador com sprite atualizado.
+ * @param textura Textura carregada que contém o sprite do jogador.
+ */
+void desenhaJogador(const JOGADOR *jogador, Texture2D textura);
+
 #endif

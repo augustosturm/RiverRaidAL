@@ -20,18 +20,18 @@ int main(void) {
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
 
     Camera2D camera = {0};
-    camera.target = (Vector2){0.0f, 0.0f};   // Ponto do mundo que a câmera "olha"
-    camera.offset = (Vector2){0.0f, 0.0f}; // Centro da tela
-    camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.target = (Vector2){0.0, 0.0};   // Ponto do mundo que a câmera "olha"
+    camera.offset = (Vector2){0.0, 0.0}; // Centro da tela
+    camera.rotation = 0.0;
+    camera.zoom = 1.0;
     
     enum OpcaoMenuPrincipal opcao = 0;
     int teclaPressionada;
     enum ConjuntoTela tela = Titulo;
 
-    const Vector2 tamanhoJogador = {56.0f, 51.0f};
-    const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
-    const float velocidadeJogador = 200.0f;
+    const Vector2 tamanhoJogador = {56.0, 51.0};
+    const Vector2 posicaoInicialJogador = {larguraTela / 2.0 - tamanhoJogador.x / 2.0, alturaTela - tamanhoJogador.y * 2.0};
+    const float velocidadeJogador = 200.0;
     const Rectangle spriteAviao = {102, 70, 56, 51};
     JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
     
@@ -43,8 +43,8 @@ int main(void) {
     SetRandomSeed((unsigned)time(NULL));
 
     INIMIGO inimigos[2];
-    inimigos[0] = criaInimigoAleatorio((Vector2){400.0f, 100.0f}, 350, 500);
-    inimigos[1] = criaInimigoAleatorio((Vector2){200.0f, 200.0f}, 150, 350);
+    inimigos[0] = criaInimigoAleatorio((Vector2){400.0, 100.0}, 350, 500);
+    inimigos[1] = criaInimigoAleatorio((Vector2){200.0, 200.0}, 150, 350);
     InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
 

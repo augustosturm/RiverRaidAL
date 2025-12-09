@@ -67,7 +67,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         }
     }
 
-    DrawTextureRec(textura, jogador->sprite, (Vector2){ jogador->entidade.x, jogador->entidade.y }, RAYWHITE);
+    desenhaJogador(jogador, textura);
 
     if (jogador->missilDisparado) {
         desenhaMissil(*missil, textura);
