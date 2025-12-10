@@ -31,16 +31,17 @@ int main(void) {
     int teclaPressionada;
     enum ConjuntoTela tela = Titulo;
 
-    const Vector2 tamanhoJogador = {56.0f, 51.0f};
-    const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, alturaTela - tamanhoJogador.y * 2.0f};
-    const float velocidadeJogador = 150.0f;
-    const Rectangle spriteAviao = {102, 70, 56, 51};
-    JOGADOR jogador = criaJogador(posicaoInicialJogador, tamanhoJogador, velocidadeJogador, spriteAviao);
-    
     Vector2 inimigosPos[50];
     int numInimigos = 0;
+    Vector2 posicaoIni;
 
-    leMapa(mapa, numArq, inimigosPos, &numInimigos);
+    leMapa(mapa, numArq, inimigosPos, &numInimigos, &posicaoIni);
+
+    const Vector2 tamanhoJogador = {56.0f, 51.0f};
+    const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, 750};
+    const float velocidadeJogador = 150.0f;
+    const Rectangle spriteAviao = {102, 70, 56, 51};
+    JOGADOR jogador = criaJogador(posicaoIni, tamanhoJogador, velocidadeJogador, spriteAviao);
 
     MISSIL missil;
     PONTUACAO pontuacao = {0};
@@ -51,12 +52,9 @@ int main(void) {
 
     printf("\n\n%d\n\n", numInimigos);
 
-    /*for(int i = 0; i < numInimigos; i++){
+    for(int i = 0; i < numInimigos; i++){
         inimigos[i] = criaInimigoAleatorio(inimigosPos[i], 300, 600);
-    }*/
-
-    //inimigos[0] = criaInimigoAleatorio((Vector2){400.0f, 100.0f}, 350, 500);
-    //inimigos[1] = criaInimigoAleatorio((Vector2){200.0f, 200.0f}, 150, 350);
+    }
 
     InitWindow(larguraTela, alturaTela, "Teste");
     SetTargetFPS(60);
@@ -87,7 +85,7 @@ int main(void) {
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq, terrenos, &numTerreno);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno, numInimigos);
             
             EndMode2D();
             

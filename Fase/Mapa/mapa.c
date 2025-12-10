@@ -4,7 +4,7 @@
 #include <string.h>
 #include "raylib.h"
 
-void leMapa(char mapa[][24], int numArq, Vector2 inimigosPos[], int *numInimigos) {
+void leMapa(char mapa[][24], int numArq, Vector2 inimigosPos[], int *numInimigos, Vector2 *posicaoIni) {
     char nome[50];
 
     for (int i = 0; i < numArq; i++) {  
@@ -38,8 +38,12 @@ void leMapa(char mapa[][24], int numArq, Vector2 inimigosPos[], int *numInimigos
             if (mapa[i][j] == 'X')
             {
                 printf("\n%f e %f", posx, posy);
-                inimigosPos[*numInimigos] = (Vector2){posx, posy};
+                inimigosPos[*numInimigos] = (Vector2){posx, posy}; 
                 *numInimigos += 1;
+            }
+            if (mapa[i][j] == 'A')
+            {
+                *posicaoIni = (Vector2){posx, posy};
             }
         }
         printf("\n");

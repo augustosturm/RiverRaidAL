@@ -210,7 +210,7 @@ void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrid
 
     missil->entidade.y -= missil->velocidade * tempoDecorrido;
 
-    if (missil->entidade.y + missil->entidade.height < ((jogador->entidade.y) - 650)) {
+    if (missil->entidade.y + missil->entidade.height < ((jogador->entidade.y) - 600)) {
     jogador->missilDisparado = false;
     }
 }

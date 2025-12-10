@@ -21,6 +21,6 @@
  * @param textura Spritesheet usada para renderizar o jogador com o recorte correto.
  * @param pontuacao Estrutura que acumula os pontos ganhos ao destruir inimigos.
  */
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno);
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos);
 
 #endif

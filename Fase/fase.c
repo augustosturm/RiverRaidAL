@@ -10,7 +10,7 @@ static const Rectangle SPRITE_PARADO = {102, 71, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
@@ -47,7 +47,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
 
     atualizaSpriteEHitboxesJogador(jogador, spriteAtual, hitBoxJogadorArea);
 
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < numInimigos; i++) {
         //MODIFICAR
         INIMIGO *inimigo = &inimigos[i];
         if (inimigo->morto) {
@@ -79,7 +79,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         desenhaMissil(*missil, textura);
     }
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < numInimigos; i++) {
         atualizaAnimacaoHelice(&inimigos[i]);
         desenhaInimigo(inimigos[i], textura);
     }
