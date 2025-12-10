@@ -4,7 +4,6 @@
 #include "entidade.h"
 #include "jogador.h"
 
-
 JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Rectangle sprite) {
     const Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
 
@@ -87,69 +86,24 @@ Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJo
     };
 }
 
-Rectangle atualizaHitboxLateralEsquerdaJogador(Rectangle entidadeJogador, enum HitBoxJogador estado) {
-    float recuoMaior = 0.25f; // ajuste fino conforme o sprite
-    float recuoMenor = 0.10f;
-
-    float recuoEsq;
-
-    switch (estado) {
-        case Parado:
-            recuoEsq = 0.0f;
-            break;
-        case MovEsquerda:
-            recuoEsq = recuoMaior;
-            break;
-        case MovDireira:
-            recuoEsq = recuoMenor;
-            break;
-        default:
-            recuoEsq = 0.0f;
-            break;
-    }
-
-    return (Rectangle){
-        entidadeJogador.x + entidadeJogador.width * recuoEsq,
-        entidadeJogador.y,
-        entidadeJogador.width * (0.15f),   // largura da lateral
-        entidadeJogador.height
-    };
-}
-
-Rectangle atualizaHitboxLateralDireitaJogador(Rectangle entidadeJogador, enum HitBoxJogador estado) {
-    float recuoMaior = 0.25f; 
-    float recuoMenor = 0.10f;
-
-    float recuoDir;
-
-    switch (estado) {
-        case Parado:
-            recuoDir = 0.0f;
-            break;
-        case MovDireira:
-            recuoDir = recuoMaior;
-            break;
-        case MovEsquerda:
-            recuoDir = recuoMenor;
-            break;
-        default:
-            recuoDir = 0.0f;
-            break;
-    }
-
-    return (Rectangle){
-        entidadeJogador.x + entidadeJogador.width - entidadeJogador.width * recuoDir - (entidadeJogador.width * 0.15f),
-        entidadeJogador.y,
-        entidadeJogador.width * (0.15f),
-        entidadeJogador.height
-    };
-}
-
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo) {
     bool colidiu = false;
 
     for (int h = 0; h < NUMHITBOX; h++) {
         if (CheckCollisionRecs(hitboxesJogador[h], entidadeInimigo)) {
+            colidiu = true;
+            printf("\nbateu\n");
+        }
+    }
+    
+    return colidiu;
+}
+
+bool verificaColisaoPosto(Rectangle hitboxesJogador[], Rectangle entidadePosto) {
+    bool colidiu = false;
+
+    for (int h = 0; h < NUMHITBOX; h++) {
+        if (CheckCollisionRecs(hitboxesJogador[h], entidadePosto)) {
             colidiu = true;
             printf("\nbateu\n");
         }

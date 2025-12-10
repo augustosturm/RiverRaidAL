@@ -93,15 +93,23 @@ Rectangle atualizaHitboxLateralDireitaJogador(Rectangle entidadeJogador, enum Hi
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo);
 
 /**
- * @brief Checa colisao entre jogador e inimigo usando as duas hitboxes pre-ajustadas.
+ * @brief Checa colisao entre jogador e terreno usando as duas hitboxes pre-ajustadas.
  *
  * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
- * @param entidadeInimigo Retangulo atual do inimigo.
+ * @param Terrenos Retangulos que compõe o mapa.
+ * @param numTerreno Número de terrenos existentes.
  * @return true se qualquer hitbox do jogador intersectar o inimigo.
  */
 bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno);
 
-
+/**
+ * @brief Checa colisao entre jogador e posto usando as duas hitboxes pre-ajustadas.
+ *
+ * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
+ * @param entidadePosto Retangulo atual do posto.
+ * @return true se qualquer hitbox do jogador intersectar o inimigo.
+ */
+bool verificaColisaoPosto(Rectangle hitboxesJogador[], Rectangle entidadePosto);
 
 /**
  * @brief Cria um missil alinhado ao jogador.

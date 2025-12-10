@@ -3,6 +3,7 @@
 #include "fase.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
+#include "Entidades/gasolina.h"
 #include "Pontuacao/pontuacao.h"
 #include "Mapa/mapa.h"
 
@@ -10,7 +11,7 @@ static const Rectangle SPRITE_PARADO = {102, 71, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos, GASOLINA postos[], int numPostos, int *gasolina) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
@@ -66,11 +67,33 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
             CloseWindow();
             return;
         }
+    }
 
-        if (verificaColisaoTerreno(jogador->hitboxes, Terrenos, numTerreno)) {
-            CloseWindow();
-            return;
+    for (int i = 0; i < numPostos; i++) {
+        //MODIFICAR
+        GASOLINA *posto = &postos[i];
+        if (posto->morto) {
+            continue;
         }
+
+        if (CheckCollisionRecs(missil->entidade, posto->entidade)) {
+            posto->morto = 1;
+            jogador->missilDisparado = false;
+            adicionaPontos(pontuacao, posto->pontos);
+        }
+
+        if (verificaColisaoPosto(jogador->hitboxes, posto->entidade)) {
+            *gasolina = 100;
+        }
+    }
+
+    if (verificaColisaoTerreno(jogador->hitboxes, Terrenos, numTerreno)) {
+        CloseWindow();
+        return;
+    }
+
+    for (int i = 0; i < numPostos; i++) {
+        desenhaPosto(postos[i], textura);
     }
 
     DrawTextureRec(textura, jogador->sprite, (Vector2){ jogador->entidade.x, jogador->entidade.y }, RAYWHITE);

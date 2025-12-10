@@ -6,6 +6,7 @@
 #include "Fase/Entidades/entidade.h"
 #include "Fase/Entidades/jogador.h"
 #include "Fase/Entidades/inimigo.h"
+#include "Fase/Entidades/gasolina.h"
 #include "Fase/Pontuacao/pontuacao.h"
 #include "Fase/fase.h"
 #include "Menu/menuPrincipal.h"
@@ -33,9 +34,15 @@ int main(void) {
 
     Vector2 inimigosPos[50];
     int numInimigos = 0;
+    Vector2 postosPos[50];
+    int numPostos = 0;
+
+    int gasolina = 100;
+    int contagem = 60;
+
     Vector2 posicaoIni;
 
-    leMapa(mapa, numArq, inimigosPos, &numInimigos, &posicaoIni);
+    leMapa(mapa, numArq, inimigosPos, &numInimigos, postosPos, &numPostos, &posicaoIni);
 
     const Vector2 tamanhoJogador = {56.0f, 51.0f};
     const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, 750};
@@ -48,12 +55,16 @@ int main(void) {
 
     SetRandomSeed((unsigned)time(NULL));
 
+    GASOLINA postos[numPostos];
     INIMIGO inimigos[numInimigos];
 
     printf("\n\n%d\n\n", numInimigos);
 
     for(int i = 0; i < numInimigos; i++){
         inimigos[i] = criaInimigoAleatorio(inimigosPos[i], 300, 600);
+    }
+    for(int i = 0; i < numPostos; i++){
+        postos[i] = criaPostoGasolina(postosPos[i], (Vector2){54, 76});
     }
 
     InitWindow(larguraTela, alturaTela, "Teste");
@@ -85,12 +96,15 @@ int main(void) {
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq, terrenos, &numTerreno);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno, numInimigos);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno, numInimigos, postos, numPostos, &gasolina);
             
             EndMode2D();
+
+            gasolina = consomeGasolina(gasolina, &contagem);
             
             DrawRectangle(0, 750, 960, 50, GRAY);
             DrawText(TextFormat("Score: %d", pontuacao.pontos), 10, 770, 20, BLACK);
+            DrawText(TextFormat("Gasolina: %d/100", gasolina), 150, 770, 20, BLACK);
 
             EndDrawing();
         } else if (tela == JogadoresPontos) {

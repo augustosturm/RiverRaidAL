@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
+#include "Entidades/gasolina.h"
 #include "Pontuacao/pontuacao.h"
 
 /**
@@ -21,6 +22,6 @@
  * @param textura Spritesheet usada para renderizar o jogador com o recorte correto.
  * @param pontuacao Estrutura que acumula os pontos ganhos ao destruir inimigos.
  */
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos);
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos, GASOLINA postos[], int numPostos, int *gasolina);
 
 #endif
