@@ -95,7 +95,6 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
     for (int h = 0; h < NUMHITBOX; h++) {
         if (CheckCollisionRecs(hitboxesJogador[h], entidadeInimigo)) {
             colidiu = true;
-            printf("\nbateu\n");
         }
     }
     
@@ -108,7 +107,6 @@ bool verificaColisaoPosto(Rectangle hitboxesJogador[], Rectangle entidadePosto) 
     for (int h = 0; h < NUMHITBOX; h++) {
         if (CheckCollisionRecs(hitboxesJogador[h], entidadePosto)) {
             colidiu = true;
-            printf("\nbateu\n");
         }
     }
     
@@ -122,7 +120,6 @@ bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], i
         for (int i = 0; i < numTerreno; i++){
             if (CheckCollisionRecs(hitboxesJogador[h], Terrenos[i])) {
                 colidiu = true;
-                printf("\nbateuTerreno\n");
             }
         }
     }

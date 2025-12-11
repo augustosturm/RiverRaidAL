@@ -10,9 +10,9 @@ TTTTTTT           TTTTTT
 TTTTTTT           TTTTTT
 TTTTTT   X         TTTTT
 TTTTTT              TTTT
-TTTTT                TTT
-TTTTT               TTTT
-TTTTT               TTTT
+TTTTTT          TTT  TTT
+TTTTTTT             TTTT
+TTTTTT              TTTT
 TTTTT       X       TTTT
 TTTTTT              TTTT
 TTTTTTT            TTTTT

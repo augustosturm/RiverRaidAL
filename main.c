@@ -17,7 +17,7 @@
 int main(void) {
     const int larguraTela = 960;
     const int alturaTela = 800;
-    int numArq = 3;  // número de mapas
+    int numArq = 4;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
     Rectangle terrenos[15000];
     int numTerreno;
@@ -84,6 +84,10 @@ int main(void) {
 
     const Texture2D textura = LoadTexture("sprites.png");
 
+    char nomeJogador[11] = "\0"; // 10 caracteres para o nome + 1 para o final da string
+    int posicaoNome = 0;
+    bool pontuacaoSalva = false;
+
     while (!WindowShouldClose()) {
         if (tela != Jogo) {
             teclaPressionada = GetKeyPressed();
@@ -99,6 +103,37 @@ int main(void) {
             entraTela(teclaPressionada, opcao, &tela);
 
             desenhaTelaMenuPrincipal(opcao);
+
+        } else if (tela == NomeJogador) {
+            insereNomeJogador(10, &posicaoNome, nomeJogador);
+
+            if (IsKeyPressed(KEY_ENTER) && posicaoNome > 0) {
+                tela = Jogo; // Inicia o jogo diretamente
+                pontuacaoSalva = false; // Prepara para salvar a próxima pontuação
+            }
+
+            BeginDrawing();
+            ClearBackground(BLACK);
+
+            DrawText("DIGITE SEU NOME", 245, 250, 40, GOLD);
+            DrawRectangle(240, 320, 480, 50, BLACK);
+            DrawRectangleLines(240, 320, 480, 50, GOLD);
+
+            DrawText(nomeJogador, 250, 330, 40, GOLD);
+
+            DrawText(TextFormat("CARACTERES: %d/10", posicaoNome), 350, 400, 20, GRAY);
+            
+            if (posicaoNome > 0)
+                DrawText("Pressione ENTER para confirmar", 270, 450, 20, GRAY);
+            else
+                DrawText("Pressione ESC para voltar", 290, 450, 20, GRAY);
+
+            if(IsKeyPressed(KEY_ESCAPE) && posicaoNome == 0) {
+                tela = MenuPrincipal;
+            }
+
+            EndDrawing();
+
         } else if (tela == Jogo) {
 
             UpdateMusicStream(music);
@@ -148,21 +183,29 @@ int main(void) {
             EndDrawing();
 
         } else if (tela == Morte) {
+            if (!pontuacaoSalva) {
+                salvaPontuacao(nomeJogador, pontuacao.pontos);
+                pontuacaoSalva = true;
+            }
+
             BeginDrawing();
             ClearBackground(BLACK);
             DrawText("MORREU", 270, 300, 100, RED);
             DrawText("Para sair, pressione esc!", 270, 400, 20, RED);
             DrawText(TextFormat("Score final: %d", pontuacao.pontos), 10, 770, 20, RED);
-            //Salva progresso aqui
             EndDrawing();
 
         } else if (tela == endGame) {
+            if (!pontuacaoSalva) {
+                salvaPontuacao(nomeJogador, pontuacao.pontos);
+                pontuacaoSalva = true;
+            }
+
             BeginDrawing();
             ClearBackground(BLACK);
             DrawText("PARABÉNS, CHEGOU AO FINAL", 10, 300, 60, BLUE);
             DrawText("Para sair, pressione esc!", 10, 360, 20, BLUE);
             DrawText(TextFormat("Score final: %d", pontuacao.pontos), 10, 770, 20, BLUE);
-            //Salva progresso aqui
             EndDrawing();
 
 

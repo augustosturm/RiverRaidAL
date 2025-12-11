@@ -1,4 +1,7 @@
-Leandro 1000
-Claudio 600
-Claro 1
-Augusto 2000
+Augusto 10000
+JOIGE 1500
+THAIS 825
+LEANDRO 300
+333 175
+ASD 0
+44 0

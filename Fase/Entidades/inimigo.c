@@ -80,8 +80,8 @@ bool verificaJogadorProximo(INIMIGO *inimigo, int jogadorPosicaoY) {
 
 void desenhaInimigo(INIMIGO inimigo, Texture2D textura) {
     if (!inimigo.morto) {
-        const float spriteWidth = inimigo.sprite.width; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
-        const float spriteHeight = inimigo.sprite.height;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
+        const float spriteWidth = inimigo.sprite.width * 0.8f; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
+        const float spriteHeight = inimigo.sprite.height * 0.8f;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
         Rectangle source = inimigo.sprite;
         Rectangle destination = {
             inimigo.entidade.x,

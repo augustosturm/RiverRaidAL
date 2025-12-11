@@ -40,7 +40,7 @@ enum OpcaoMenuPrincipal escolheOpcaoMenuPrincipal(int teclaPressionada, enum Opc
 
 void entraTela(int teclaPressionada, enum OpcaoMenuPrincipal opcao, enum ConjuntoTela *tela) {
     if (teclaPressionada == KEY_ENTER && opcao == NovoJogo) {
-        *tela = Jogo;
+        *tela = NomeJogador;
     }
 
     if (teclaPressionada == KEY_ENTER && opcao == Sair) {
