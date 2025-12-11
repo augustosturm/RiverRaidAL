@@ -23,11 +23,11 @@ int main(void) {
     int numTerreno;
 
     Camera2D camera = {0};
-    camera.target = (Vector2){0.0f, 0.0f};   // Ponto do mundo que a câmera "olha"
-    camera.offset = (Vector2){0.0f, 0.0f}; // Centro da tela
-    camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
-
+    camera.target = (Vector2){0.0, 0.0};   // Ponto do mundo que a câmera "olha"
+    camera.offset = (Vector2){0.0, 0.0}; // Centro da tela
+    camera.rotation = 0.0;
+    camera.zoom = 1.0;
+  
     InitAudioDevice();
     
     Music music = LoadMusicStream("eye.mp3");

@@ -21,7 +21,10 @@ JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Re
 }
 
 void atualizaSpriteEHitboxesJogador(JOGADOR *jogador, Rectangle sprite, enum HitBoxJogador hitboxEstado) {
+    const float escalaSprite = 0.75f;
     jogador->sprite = sprite;
+    jogador->entidade.width = sprite.width * escalaSprite;
+    jogador->entidade.height = sprite.height * escalaSprite;
     jogador->hitboxes[0] = atualizaHitboxSuperiorJogador(jogador->entidade, hitboxEstado);
     jogador->hitboxes[1] = atualizaHitboxInferiorJogador(jogador->entidade, hitboxEstado);
     //jogador->hitboxes[2] = atualizaHitboxLateralEsquerdaJogador(jogador->entidade, hitboxEstado);
@@ -143,7 +146,7 @@ void disparaMissil(JOGADOR *jogador, MISSIL *missil, Sound tiro) {
 
 MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade, Rectangle sprite) {
     Vector2 posicaoMissil = {
-        jogador.entidade.x + jogador.entidade.width / 2.0f - tamanhoMissil.x / 2.0f,
+    jogador.entidade.x + jogador.entidade.width- tamanhoMissil.x,
         jogador.entidade.y
     };
 
@@ -182,4 +185,15 @@ void desenhaMissil(MISSIL missil, Texture2D textura) {
     };
 
     DrawTexturePro(textura, source, destination, (Vector2){0.0f, 0.0f}, 0.0f, RAYWHITE);
+}
+
+void desenhaJogador(const JOGADOR *jogador, Texture2D textura) {
+    Rectangle destino = {
+        jogador->entidade.x,
+        jogador->entidade.y,
+        jogador->entidade.width,
+        jogador->entidade.height
+    };
+
+    DrawTexturePro(textura, jogador->sprite, destino, (Vector2){0.0f, 0.0f}, 0.0f, RAYWHITE);
 }
