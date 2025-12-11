@@ -2,13 +2,19 @@ criar função gera inimigo, aleatorio se gera aviao ou navio
 
 Ajustar:
 Inimigos spawn
+nave spawn
 Inimigos direção
-Movimentação do personagem pra frente
 Colocar animação explosão
+Sistema de pontuação
 
 --------------
 Fazer do zero:
 Sistema de Fases (Mapas, final do jogo ...)
 Save
-Sistema de pontuação
 Gasolina
+
+--------------
+Feito:
+Tela seguindo corretamente
+pontes
+Movimentação do personagem pra frente

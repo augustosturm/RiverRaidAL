@@ -1,20 +1,20 @@
-TTTTTTTTT       TTTTTTTT
-TTTTTTTT   X      TTTTTT
+TTTTTTTTT       TTTT  TT
+TTTTTTTT          TTTTTT
 TTTTTTT            TTTTT
-TTTTTT             TTTTT
-TTTTTT         X   TTTTT
-TTTTTTT            TTTTT
-TTTTTTTT         TTTTTTT
-TTTTTTTTT       TTTTTTTT
-TTTTTTTTT   T    TTTTTTT
-TTTTTTT     TTT   TTTTTT
-TTTTTT   X TTTTTT  TTTTT
-TTTTTT    TTTTTTT   TTTT
-TTTTT       TTTT     TTT
-TTTTT             X TTTT
-TTTTT               TTTT
-TTTTT       X       TTTT
 TTTTTT              TTTT
+TTTTTT    G        TTTTT
 TTTTTTT            TTTTT
-TTTTTTTTT         TTTTTT
-TTTTTTTTTT   A  TTTTTTTT
+TTTTTTT          TTTTTTT
+TTTTTTT         TTTTTTTT
+TTTTTTT          TTTTTTT
+TTTTTTT           TTTTTT
+TTTTTT             TTTTT
+TTTTTT              TTTT
+TTTTT                TTT
+TTTTT               TTTT
+TTTTT               TTTT
+TTTTT               TTTT
+TTTTT               TTTT
+TTTTT               TTTT
+TTTTT               TTTT
+TTTTT       A      TTTTT

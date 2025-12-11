@@ -4,7 +4,7 @@
 #include <string.h>
 #include "raylib.h"
 
-void leMapa(char mapa[][24], int numArq) {
+void leMapa(char mapa[][24], int numArq, Vector2 inimigosPos[], int *numInimigos, Vector2 postosPos[], int *numPostos, Vector2 *posicaoIni) {
     char nome[50];
 
     for (int i = 0; i < numArq; i++) {  
@@ -25,31 +25,76 @@ void leMapa(char mapa[][24], int numArq) {
         }
     }
 
+    int yNormal = ((numArq-1)*-20);
+
     for(int i = 0; i < (numArq*20); i++){
+
         for(int j = 0; j < 24; j++){
+
+            float posx = j*40;
+            float posy = yNormal*40;
+
             printf(" %c", mapa[i][j]);
-            mapa[i][j] = mapa[i][j];
+            if (mapa[i][j] == 'X')
+            {
+                printf("\n%f e %f", posx, posy);
+                inimigosPos[*numInimigos] = (Vector2){posx, posy}; 
+                *numInimigos += 1;
+            }
+            if (mapa[i][j] == 'A')
+            {
+                *posicaoIni = (Vector2){posx, posy};
+            }
+            if (mapa[i][j] == 'G')
+            {
+                postosPos[*numPostos] = (Vector2){posx, posy}; 
+                *numPostos += 1;
+            }
         }
         printf("\n");
+        yNormal++;
+        if ((i % 20) == 19){
+            yNormal++;
+        }
     }
 }
 
-void desenhaMapa(char mapa[][24], int numArq){
+void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[], int *numTerreno){
 
     int yNormal = ((numArq-1)*-20);
+    *numTerreno = 0;
 
     ClearBackground(RAYWHITE);
+
     for(int i = 0; i < (numArq*20); i++){
+
         for(int j = 0; j < 24; j++){
-            
-            if(mapa[i][j] == 'T')
-                DrawRectangle(j*40, yNormal*40, 40, 40, GREEN);
+            float posx = j*40;
+            float posy = yNormal*40;
+            float width = 40;
+            float height = 40;
+
+            if(mapa[i][j] == 'T'){
+                DrawRectangle(posx, posy, width, height, LIME);
+                terrenos[*numTerreno] = (Rectangle){posx, posy, width, height};
+                *numTerreno += 1;
+            }
             else if(mapa[i][j] == ' ')
-                DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
+                DrawRectangle(posx, posy, width, height, SKYBLUE);
             else if(mapa[i][j] == 'X')
-                DrawRectangle(j*40, yNormal*40, 40, 40, SKYBLUE);
+                DrawRectangle(posx, posy, width, height, SKYBLUE);
+            else if(mapa[i][j] == 'G')
+                DrawRectangle(posx, posy, width, height, SKYBLUE);
+            else if(mapa[i][j] == 'A')
+                DrawRectangle(posx, posy, width, height, SKYBLUE);
         }
-    yNormal++;
+
+        yNormal++;
+        if ((i % 20) == 19) {
+            for (int j = 0; j < 24; j++) {
+                DrawRectangle(j * 40, yNormal * 40, 40, 40, BROWN);
+            }
+            yNormal++;
+        }
     }
-    //EndDrawing();
 }

@@ -2,6 +2,7 @@
 #define JOGADOR_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include "raylib.h"
 
 #define NUMHITBOX 2
@@ -65,6 +66,24 @@ Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJo
 Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
 
 /**
+ * @brief Calcula a hitbox superior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção frontal (topo) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxLateralEsquerdaJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
+ * @brief Calcula a hitbox superior do jogador conforme o estado da animação.
+ *
+ * @param entidadeJogador Retângulo base atual do jogador (posição e tamanho).
+ * @param hitBoxAtualParams Enum que indica se o jogador está parado, indo para a direita ou esquerda.
+ * @return Rectangle correspondente à porção frontal (topo) do avião já ajustada para esse estado.
+ */
+Rectangle atualizaHitboxLateralDireitaJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams);
+
+/**
  * @brief Checa colisao entre jogador e inimigo usando as duas hitboxes pre-ajustadas.
  *
  * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
@@ -73,6 +92,24 @@ Rectangle atualizaHitboxInferiorJogador(Rectangle entidadeJogador, enum HitBoxJo
  */
 bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimigo);
 
+/**
+ * @brief Checa colisao entre jogador e terreno usando as duas hitboxes pre-ajustadas.
+ *
+ * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
+ * @param Terrenos Retangulos que compõe o mapa.
+ * @param numTerreno Número de terrenos existentes.
+ * @return true se qualquer hitbox do jogador intersectar o inimigo.
+ */
+bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno);
+
+/**
+ * @brief Checa colisao entre jogador e posto usando as duas hitboxes pre-ajustadas.
+ *
+ * @param hitboxesJogador Vetor com as hitboxes superior e inferior calculadas para o jogador.
+ * @param entidadePosto Retangulo atual do posto.
+ * @return true se qualquer hitbox do jogador intersectar o inimigo.
+ */
+bool verificaColisaoPosto(Rectangle hitboxesJogador[], Rectangle entidadePosto);
 
 /**
  * @brief Cria um missil alinhado ao jogador.
@@ -92,7 +129,7 @@ MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade, Rect
  * @param missil Ponteiro para o missil a ser inicializado.
  * @return void
  */
-void disparaMissil(JOGADOR *jogador, MISSIL *missil);
+void disparaMissil(JOGADOR *jogador, MISSIL *missil, Sound tiro);
 
 /**
  * @brief Atualiza a posicao Y do missil.

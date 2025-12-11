@@ -1,8 +1,8 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include "raylib.h"
 #include "entidade.h"
 #include "jogador.h"
-
 
 JOGADOR criaJogador(Vector2 posicao, Vector2 tamanhoHitbox, float velocidade, Rectangle sprite) {
     const Rectangle entidade = criaEntidade(posicao, tamanhoHitbox);
@@ -27,6 +27,8 @@ void atualizaSpriteEHitboxesJogador(JOGADOR *jogador, Rectangle sprite, enum Hit
     jogador->entidade.height = sprite.height * escalaSprite;
     jogador->hitboxes[0] = atualizaHitboxSuperiorJogador(jogador->entidade, hitboxEstado);
     jogador->hitboxes[1] = atualizaHitboxInferiorJogador(jogador->entidade, hitboxEstado);
+    //jogador->hitboxes[2] = atualizaHitboxLateralEsquerdaJogador(jogador->entidade, hitboxEstado);
+    //jogador->hitboxes[3] = atualizaHitboxLateralDireitaJogador(jogador->entidade, hitboxEstado);
 }
 
 Rectangle atualizaHitboxSuperiorJogador(Rectangle entidadeJogador, enum HitBoxJogador hitBoxAtualParams) {
@@ -93,13 +95,42 @@ bool verificaColisaoInimigo(Rectangle hitboxesJogador[], Rectangle entidadeInimi
     for (int h = 0; h < NUMHITBOX; h++) {
         if (CheckCollisionRecs(hitboxesJogador[h], entidadeInimigo)) {
             colidiu = true;
+            printf("\nbateu\n");
         }
     }
     
     return colidiu;
 }
 
-void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
+bool verificaColisaoPosto(Rectangle hitboxesJogador[], Rectangle entidadePosto) {
+    bool colidiu = false;
+
+    for (int h = 0; h < NUMHITBOX; h++) {
+        if (CheckCollisionRecs(hitboxesJogador[h], entidadePosto)) {
+            colidiu = true;
+            printf("\nbateu\n");
+        }
+    }
+    
+    return colidiu;
+}
+
+bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], int numTerreno) {
+    bool colidiu = false;
+
+    for (int h = 0; h < NUMHITBOX; h++) {
+        for (int i = 0; i < numTerreno; i++){
+            if (CheckCollisionRecs(hitboxesJogador[h], Terrenos[i])) {
+                colidiu = true;
+                printf("\nbateuTerreno\n");
+            }
+        }
+    }
+    
+    return colidiu;
+}
+
+void disparaMissil(JOGADOR *jogador, MISSIL *missil, Sound tiro) {
     static const Vector2 TAMANHO_MISSIL = {22.0f, 86.0f};
     static const float VELOCIDADE_MISSIL = 800.0f;
     static const Rectangle SPRITE_MISSIL = {22, 86, 7, 31};
@@ -108,6 +139,7 @@ void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
         return;
     }
 
+    PlaySound(tiro);
     *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL, SPRITE_MISSIL);
     jogador->missilDisparado = true;
 }
@@ -135,8 +167,9 @@ void atualizaPosicaoMissil(JOGADOR *jogador, MISSIL *missil, float tempoDecorrid
     }
 
     missil->entidade.y -= missil->velocidade * tempoDecorrido;
-    if (missil->entidade.y + missil->entidade.height < 0) {
-        jogador->missilDisparado = false;
+
+    if (missil->entidade.y + missil->entidade.height < ((jogador->entidade.y) - 600)) {
+    jogador->missilDisparado = false;
     }
 }
 
