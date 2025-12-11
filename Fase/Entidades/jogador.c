@@ -127,7 +127,7 @@ bool verificaColisaoTerreno(Rectangle hitboxesJogador[], Rectangle Terrenos[], i
     return colidiu;
 }
 
-void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
+void disparaMissil(JOGADOR *jogador, MISSIL *missil, Sound tiro) {
     static const Vector2 TAMANHO_MISSIL = {22.0f, 86.0f};
     static const float VELOCIDADE_MISSIL = 800.0f;
     static const Rectangle SPRITE_MISSIL = {22, 86, 7, 31};
@@ -136,6 +136,7 @@ void disparaMissil(JOGADOR *jogador, MISSIL *missil) {
         return;
     }
 
+    PlaySound(tiro);
     *missil = criaMissil(*jogador, TAMANHO_MISSIL, VELOCIDADE_MISSIL, SPRITE_MISSIL);
     jogador->missilDisparado = true;
 }

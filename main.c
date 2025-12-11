@@ -19,7 +19,7 @@ int main(void) {
     const int alturaTela = 800;
     int numArq = 3;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
-    Rectangle terrenos[10000];
+    Rectangle terrenos[15000];
     int numTerreno;
 
     Camera2D camera = {0};
@@ -27,7 +27,20 @@ int main(void) {
     camera.offset = (Vector2){0.0f, 0.0f}; // Centro da tela
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    InitAudioDevice();
     
+    Music music = LoadMusicStream("eye.mp3");
+
+    SetMusicVolume(music, 0.2f);
+    PlayMusicStream(music);
+
+
+    Sound tiro = LoadSound("tiro.wav");
+    Sound explosion = LoadSound("explosion.wav");
+    Sound morreu = LoadSound("morreu.wav");
+    Sound venceu = LoadSound("winner.mp3");
+
     enum OpcaoMenuPrincipal opcao = 0;
     int teclaPressionada;
     enum ConjuntoTela tela = Titulo;
@@ -45,7 +58,6 @@ int main(void) {
     leMapa(mapa, numArq, inimigosPos, &numInimigos, postosPos, &numPostos, &posicaoIni);
 
     const Vector2 tamanhoJogador = {56.0f, 51.0f};
-    const Vector2 posicaoInicialJogador = {larguraTela / 2.0f - tamanhoJogador.x / 2.0f, 750};
     const float velocidadeJogador = 150.0f;
     const Rectangle spriteAviao = {102, 70, 56, 51};
     JOGADOR jogador = criaJogador(posicaoIni, tamanhoJogador, velocidadeJogador, spriteAviao);
@@ -61,7 +73,7 @@ int main(void) {
     printf("\n\n%d\n\n", numInimigos);
 
     for(int i = 0; i < numInimigos; i++){
-        inimigos[i] = criaInimigoAleatorio(inimigosPos[i], 300, 600);
+        inimigos[i] = criaInimigoAleatorio(inimigosPos[i], (inimigosPos[i].x - 50), (inimigosPos[i].x + 50));
     }
     for(int i = 0; i < numPostos; i++){
         postos[i] = criaPostoGasolina(postosPos[i], (Vector2){54, 76});
@@ -89,6 +101,8 @@ int main(void) {
             desenhaTelaMenuPrincipal(opcao);
         } else if (tela == Jogo) {
 
+            UpdateMusicStream(music);
+
             if(camera.target.y >= ((numArq-1)*-800)+3)
                 camera.target.y = jogador.entidade.y - alturaTela + 150;
 
@@ -96,7 +110,7 @@ int main(void) {
             BeginMode2D(camera);
 
             desenhaMapa(mapa, numArq, terrenos, &numTerreno);
-            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno, numInimigos, postos, numPostos, &gasolina);
+            executaJogo(&jogador, &missil, inimigos, larguraTela, alturaTela, textura, &pontuacao, numArq, terrenos, numTerreno, numInimigos, postos, numPostos, &gasolina, &tela, tiro, explosion, morreu, venceu);
             
             EndMode2D();
 
@@ -132,12 +146,42 @@ int main(void) {
             }
 
             EndDrawing();
+
+        } else if (tela == Morte) {
+            BeginDrawing();
+            ClearBackground(BLACK);
+            DrawText("MORREU", 270, 300, 100, RED);
+            DrawText("Para sair, pressione esc!", 270, 400, 20, RED);
+            DrawText(TextFormat("Score final: %d", pontuacao.pontos), 10, 770, 20, RED);
+            //Salva progresso aqui
+            EndDrawing();
+
+        } else if (tela == endGame) {
+            BeginDrawing();
+            ClearBackground(BLACK);
+            DrawText("PARABÉNS, CHEGOU AO FINAL", 10, 300, 60, BLUE);
+            DrawText("Para sair, pressione esc!", 10, 360, 20, BLUE);
+            DrawText(TextFormat("Score final: %d", pontuacao.pontos), 10, 770, 20, BLUE);
+            //Salva progresso aqui
+            EndDrawing();
+
+
         } else if (tela == Saida) {
+            UnloadSound(tiro);
+            UnloadSound(explosion);
+            UnloadSound(morreu);
+            UnloadSound(venceu);
+            CloseAudioDevice();
             CloseWindow();
             return 0;
         }
     }
 
+    UnloadSound(tiro);
+    UnloadSound(explosion);
+    UnloadSound(morreu);
+    UnloadSound(venceu);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

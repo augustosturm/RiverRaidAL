@@ -129,7 +129,7 @@ MISSIL criaMissil(JOGADOR jogador, Vector2 tamanhoMissil, float velocidade, Rect
  * @param missil Ponteiro para o missil a ser inicializado.
  * @return void
  */
-void disparaMissil(JOGADOR *jogador, MISSIL *missil);
+void disparaMissil(JOGADOR *jogador, MISSIL *missil, Sound tiro);
 
 /**
  * @brief Atualiza a posicao Y do missil.

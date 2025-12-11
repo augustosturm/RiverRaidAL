@@ -9,6 +9,8 @@ enum ConjuntoTela {
     MenuPrincipal,
     Jogo,
     Saida,
+    Morte,
+    endGame,
     JogadoresPontos
 };
 

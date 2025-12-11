@@ -75,7 +75,7 @@ void desenhaMapa(char mapa[][24], int numArq, Rectangle terrenos[], int *numTerr
             float height = 40;
 
             if(mapa[i][j] == 'T'){
-                DrawRectangle(posx, posy, width, height, GREEN);
+                DrawRectangle(posx, posy, width, height, LIME);
                 terrenos[*numTerreno] = (Rectangle){posx, posy, width, height};
                 *numTerreno += 1;
             }

@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include "raylib.h"
 #include "fase.h"
+#include "Menu/menuPrincipal.h"
 #include "Entidades/jogador.h"
 #include "Entidades/inimigo.h"
 #include "Entidades/gasolina.h"
@@ -11,14 +12,20 @@ static const Rectangle SPRITE_PARADO = {102, 71, 56, 51};
 static const Rectangle SPRITE_DIREITA = {161, 74, 49, 55};
 static const Rectangle SPRITE_ESQUERDA = {41, 74, 49, 55};
 
-void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos, GASOLINA postos[], int numPostos, int *gasolina) {
+void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int larguraTela, int alturaTela, Texture2D textura, PONTUACAO *pontuacao, int numArq, Rectangle Terrenos[], int numTerreno, int numInimigos, GASOLINA postos[], int numPostos, int *gasolina, enum ConjuntoTela *tela, Sound tiro, Sound explosion, Sound morreu, Sound venceu) {
     const float tempoFrame = GetFrameTime();
     const float deslocamento = jogador->velocidade * tempoFrame;
     enum HitBoxJogador hitBoxJogadorArea = Parado;
     Rectangle spriteAtual = SPRITE_PARADO;
 
+    if(jogador->entidade.y <= ((numArq-1)*(-800))+1){
+        adicionaPontos(pontuacao, 100);
+        PlaySound(venceu);
+        *tela = endGame;
+    }
+
     if (IsKeyDown(KEY_SPACE)) {
-        disparaMissil(jogador, missil);
+        disparaMissil(jogador, missil, tiro);
     }
 
     atualizaPosicaoMissil(jogador, missil, tempoFrame);
@@ -58,13 +65,16 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         moveInimigo(inimigo, jogador->entidade.y);
 
         if (CheckCollisionRecs(missil->entidade, inimigo->entidade)) {
+            PlaySound(explosion); 
             inimigo->morto = 1;
             jogador->missilDisparado = false;
             adicionaPontos(pontuacao, inimigo->pontos);
         }
 
         if (verificaColisaoInimigo(jogador->hitboxes, inimigo->entidade)) {
-            CloseWindow();
+            *tela = Morte;
+            PlaySound(morreu);
+            //CloseWindow();
             return;
         }
     }
@@ -77,6 +87,7 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         }
 
         if (CheckCollisionRecs(missil->entidade, posto->entidade)) {
+            PlaySound(explosion);
             posto->morto = 1;
             jogador->missilDisparado = false;
             adicionaPontos(pontuacao, posto->pontos);
@@ -87,8 +98,17 @@ void executaJogo(JOGADOR *jogador, MISSIL *missil, INIMIGO *inimigos, int largur
         }
     }
 
+    if (*gasolina <= 0) {
+        *tela = Morte;
+        PlaySound(morreu);
+        //CloseWindow();
+        return;
+    }
+
     if (verificaColisaoTerreno(jogador->hitboxes, Terrenos, numTerreno)) {
-        CloseWindow();
+        *tela = Morte;
+        PlaySound(morreu);
+        //CloseWindow();
         return;
     }
 
