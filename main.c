@@ -17,7 +17,7 @@
 int main(void) {
     const int larguraTela = 960;
     const int alturaTela = 800;
-    int numArq = 3;  // número de mapas
+    int numArq = 4;  // número de mapas
     char mapa[20 * numArq][24]; // 20 linhas por mapa, 24 colunas
     Rectangle terrenos[15000];
     int numTerreno;

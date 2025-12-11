@@ -6,7 +6,7 @@ TTTTTT    G        TTTTT
 TTTTTTT            TTTTT
 TTTTTTT          TTTTTTT
 TTTTTTT         TTTTTTTT
-TTTTTTT          TTTTTTT
+TTTTTTT    X     TTTTTTT
 TTTTTTT           TTTTTT
 TTTTTT             TTTTT
 TTTTTT              TTTT
