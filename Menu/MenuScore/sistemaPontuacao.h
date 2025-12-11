@@ -30,3 +30,11 @@ void ordenaRankingPorPontuacao(JogadorPontos *ranking, int totalJogadores);
  * @param totalJogadores Quantidade de jogadores a serem mostrados.
  */
 void imprimeRankingJogadores(const JogadorPontos *ranking, int totalJogadores);
+
+/**
+ * @brief Salva o nome e a pontuação do jogador no arquivo de ranking.
+ *
+ * @param nome O nome do jogador a ser salvo.
+ * @param pontos A pontuação final do jogador.
+ */
+void salvaPontuacao(const char *nome, int pontos);

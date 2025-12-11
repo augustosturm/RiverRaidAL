@@ -1,4 +1,1 @@
-Leandro 1000
-Claudio 600
-Claro 1
-Augusto 2000
+Augusto 10000

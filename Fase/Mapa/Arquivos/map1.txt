@@ -1,4 +1,4 @@
-TTTTTTTTT       TTTT  TT
+TTTTTTTTT       TTTTTTTT
 TTTTTTTT          TTTTTT
 TTTTTTT            TTTTT
 TTTTTT              TTTT

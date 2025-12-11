@@ -16,8 +16,8 @@ GASOLINA criaPostoGasolina(Vector2 posicao, Vector2 tamanhoHitbox) {
 
 void desenhaPosto(GASOLINA posto, Texture2D textura) {
     if (!posto.morto) {
-        const float spriteWidth = posto.sprite.width; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
-        const float spriteHeight = posto.sprite.height;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
+        const float spriteWidth = posto.sprite.width * 0.8f; //> 0 ? inimigos[i].sprite.width : -inimigos[i].sprite.width
+        const float spriteHeight = posto.sprite.height * 0.8f;// > 0 ? inimigos[i].sprite.height : -inimigos[i].sprite.height
         Rectangle source = posto.sprite;
         Rectangle destination = {
             posto.entidade.x,
